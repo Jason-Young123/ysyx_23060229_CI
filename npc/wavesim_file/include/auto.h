@@ -1,1 +1,2 @@
 #define CONFIG_WP 1
+#define CONFIG_DIFFTEST 1
