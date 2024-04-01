@@ -46,6 +46,8 @@ static char *diff_so_file = NULL;
 static char *img_file = NULL;
 static int difftest_port = 1234;
 
+
+
 static long load_img() {
   if (img_file == NULL) {
     Log("No image is given. Use the default build-in image.");
@@ -68,7 +70,11 @@ static long load_img() {
   return size;
 }
 
+
+
+
 static int parse_args(int argc, char *argv[]) {
+  //printf("in parse_args\n");
   const struct option table[] = {
     {"batch"    , no_argument      , NULL, 'b'},
     {"log"      , required_argument, NULL, 'l'},
@@ -97,6 +103,11 @@ static int parse_args(int argc, char *argv[]) {
   }
   return 0;
 }
+
+
+
+
+
 
 void init_monitor(int argc, char *argv[]) {
   /* Perform some global initialization. */

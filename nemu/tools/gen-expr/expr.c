@@ -13,14 +13,15 @@
 * See the Mulan PSL v2 for more details.
 ***************************************************************************************/
 
-#include <isa.h>
-#include <memory/paddr.h>
+//#include <isa.h>
+//#include <memory/paddr.h>
 // <isa.h> => <isa_def.h> => <common.h> => <debug.h> => define TODO()
 
 /* We use the POSIX regex functions to process regular expressions.
  * Type 'man regex' for more information about POSIX regex functions.
  */
 #include <regex.h>
+#include <stdbool.h>
 
 enum {
   TK_NOTYPE = 256, TK_EQ,
@@ -71,7 +72,9 @@ static struct rule {
   {"\\|\\|", TK_OR}			//logical or
 };
 
-#define NR_REGEX ARRLEN(rules)
+//#define NR_REGEX ARRLEN(rules)
+#define NR_REGEX 43
+#define word_t uint32_t
 
 static regex_t re[NR_REGEX] = {};
 
@@ -87,7 +90,7 @@ void init_regex() {
     ret = regcomp(&re[i], rules[i].regex, REG_EXTENDED);
     if (ret != 0) {
       regerror(ret, &re[i], error_msg, 128);
-      panic("regex compilation failed: %s\n%s", error_msg, rules[i].regex);
+      //panic("regex compilation failed: %s\n%s", error_msg, rules[i].regex);
     }
   }
 }
@@ -97,8 +100,8 @@ typedef struct token {
   char str[32];
 } Token;
 
-static Token tokens[32] __attribute__((used)) = {};//contain 32 valid characters at most
-static int novc __attribute__((used)) = 0;// number of valid characters
+static Token tokens[32] = {};//contain 32 valid characters at most
+static int novc = 0;// number of valid characters
 
 static bool make_token(char *e) {
   int position = 0;
@@ -115,11 +118,13 @@ static bool make_token(char *e) {
 
     /* Try all rules one by one. */
     for (i = 0; i < NR_REGEX; i ++) {
+	  //printf("in for\n");
       if (regexec(&re[i], e + position, 1, &pmatch, 0) == 0 && pmatch.rm_so == 0) {
-        //char *substr_start = e + position;
+		//printf("in if\n");
+        char *substr_start = e + position;
         int substr_len = pmatch.rm_eo;
 
-        //Log("match rules[%d] = \"%s\" at position %d with len %d: %.*s",
+        //printf("match rules[%d] = \"%s\" at position %d with len %d: %.*s",
         //    i, rules[i].regex, position, substr_len, substr_len, substr_start);
 
         position += substr_len;
@@ -145,7 +150,7 @@ static bool make_token(char *e) {
     }
 
     if (i == NR_REGEX) {
-      printf("no match at position %d\n%s\n%*.s^\n", position, e, position, "");
+      //printf("no match at position %d\n%s\n%*.s^\n", position, e, position, "");
       return false;
     }
   }
@@ -290,7 +295,7 @@ word_t eval(int start, int end){
 
 			//case2: $pc
 			else if(tokens[start].type == '$'){
-				char tmp[4] = {};
+				/*char tmp[4] = {};
 				if(end - start == 2){//pc, a0, t1 ...
 					tmp[0] = tokens[start+1].type; tmp[1] = tokens[start+2].type; tmp[2] = '\0';
 				}
@@ -311,6 +316,7 @@ word_t eval(int start, int end){
 					printf("bad expression!\n");
 					assert(0);
 				}
+				*/
 			}
 
 			//case3: 1201
@@ -343,7 +349,7 @@ word_t eval(int start, int end){
 						break;
 					  }
 			case TK_MINUS:{return -eval(op + 1, end); break;}
-			case TK_DEREF:{return (word_t)paddr_read(eval(op+1, end), 1); break;}
+			case TK_DEREF:break;//{return (word_t)paddr_read(eval(op+1, end), 1); break;}
 			case TK_EQ: {return eval(start, op-1) == eval(op+1, end); break;}
 			case TK_NEQ: {return eval(start, op-1) != eval(op+1, end); break;}
 			case TK_AND: {return eval(start, op-1) && eval(op+1, end); break;}
@@ -368,12 +374,13 @@ word_t expr(char *e, bool *success, bool *null) {
     *success = false;
     return 0;
   }
-
+  
   if(novc == 0){
 	*null = true;
 	return 0;
   }
-
+  
+  /*
   //tell the difference between '-' and TK_MINUS, '*' and TK_DEREF
   for(int i = 0; i < novc; ++i){
   	if(tokens[i].type == '-' && (i == 0||tokens[i-1].type == '+'||\
@@ -388,7 +395,7 @@ word_t expr(char *e, bool *success, bool *null) {
         tokens[i-1].type == '*'||tokens[i-1].type == TK_DEREF||\
 		tokens[i-1].type == '('||tokens[i-1].type == '/'))
         tokens[i].type = TK_DEREF;
-  }
+  }*/
 
   /* TODO: Insert codes to evaluate the expression. */
   return eval(0, novc - 1);
