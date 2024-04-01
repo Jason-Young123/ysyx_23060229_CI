@@ -67,15 +67,11 @@ void init_difftest(const char* ref_so_file, long img_size, int port){
 
 void difftest_step(){
 	if(difftest_skipping){
-		printf("skip\n");
 		difftest_exec(1);
 		struct npc_context_t npc_cpu;
     	for(int i = 0; i < 32; i++)
         	npc_cpu.gpr[i] = top -> regs[i];
     	npc_cpu.pc = top -> pc;
-		printf("%x\n",npc_cpu.pc);
-		printf("%x\n",npc_cpu.gpr[14]);
-		printf("%x\n",npc_cpu.gpr[15]);
 		difftest_regcpy(&npc_cpu, NPC_TO_NEMU);
 		difftest_skipping = false;
 	}
