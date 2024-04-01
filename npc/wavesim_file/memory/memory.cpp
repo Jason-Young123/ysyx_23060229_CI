@@ -24,6 +24,8 @@ uint8_t serial_port[8] = {0,0,0,0,0,0,0,0};
 uint32_t timer_addr[2] = {0};
 
 
+extern bool difftest_skip;
+
 long init_mem(const char* file){
     printf("---------------------------------init_mem----------------------------------\n");
     FILE *fp = fopen(file, "rb");
@@ -118,6 +120,7 @@ extern "C" int pmem_read_(uint32_t raddr, bool ren){
 
 	//有关时钟
 	if(raddr >= RTC_ADDR && raddr <= RTC_ADDR + 7){
+		difftest_skip = true;
 		if(raddr == RTC_ADDR){
 			timer_addr[0] = (uint32_t)get_time();
 			return timer_addr[0];

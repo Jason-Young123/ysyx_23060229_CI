@@ -8,10 +8,10 @@ void (*difftest_raise_intr)(uint64_t NO) = NULL;
 
 
 extern bool is_simulating;
+extern bool difftest_skip;
 extern Vysyx_23060229_top* top;
 extern uint8_t memory[];
 extern char* regname[];
-
 
 
 //static struct npc_context_t npc_cpu;
@@ -65,36 +65,48 @@ void init_difftest(const char* ref_so_file, long img_size, int port){
 
 
 void difftest_step(){
-	struct npc_context_t tmp;
-	difftest_exec(1);
-	difftest_regcpy(&tmp, NEMU_TO_NPC);
+	if(difftest_skip){
+		difftest_exec(1);
+		struct npc_context_t npc_cpu;
+    	for(int i = 0; i < 32; i++)
+        	npc_cpu.gpr[i] = top -> regs[i];
+    	npc_cpu.pc = top -> pc;
+		difftest_regcpy(&npc_cpu, NPC_TO_NEMU);
+		difftest_skip = false;
+	}
 
-	bool tag = true;
-	if(tmp.pc != top -> pc)
-		tag = false;
-	for(int i = 0; i < 32; i++)
-		if(tmp.gpr[i] != top -> regs[i])
-			tag = false;
+	else{
+		struct npc_context_t tmp;
+		difftest_exec(1);
+		difftest_regcpy(&tmp, NEMU_TO_NPC);
 
-
-	if(!tag){
-        printf("\033[31m--------------------- Difftest Failure! ------------------------\n");
-        printf("inst at addr %#8.8x produces different results!\n", top -> pc - 4);
-        printf("----------------------------------------------------------------\033[0m\n");
-        printf("    REF(NEMU)   	      DUT(NPC)\n");
-        for(int j = 0; j < 32; ++j)
-			if(tmp.gpr[j] != top -> regs[j])
-            	printf("\033[31m%3s : 0x%8.8x           0x%8.8x\033[0m\n",regname[j],tmp.gpr[j],top -> regs[j]);
-			else
-				printf("\033[32m%3s : 0x%8.8x           0x%8.8x\033[0m\n",regname[j],tmp.gpr[j],top -> regs[j]);
-        
+		bool tag = true;
 		if(tmp.pc != top -> pc)
-			printf("\033[31m%3s : 0x%8.8x           0x%8.8x\033[0m\n","pc",tmp.pc, top -> pc);
-		else
-			printf("\033[32m%3s : 0x%8.8x           0x%8.8x\033[0m\n","pc",tmp.pc ,top -> pc);
+			tag = false;
+		for(int i = 0; i < 32; i++)
+			if(tmp.gpr[i] != top -> regs[i])
+				tag = false;
 
-		printf("\033[31m----------------------------------------------------------------\033[0m\n");
-    	is_simulating = false;
+
+		if(!tag){
+        	printf("\033[31m--------------------- Difftest Failure! ------------------------\n");
+        	printf("inst at addr %#8.8x produces different results!\n", top -> pc - 4);
+        	printf("----------------------------------------------------------------\033[0m\n");
+        	printf("    REF(NEMU)   	      DUT(NPC)\n");
+        	for(int j = 0; j < 32; ++j)
+				if(tmp.gpr[j] != top -> regs[j])
+            		printf("\033[31m%3s : 0x%8.8x           0x%8.8x\033[0m\n",regname[j],tmp.gpr[j],top -> regs[j]);
+				else
+					printf("\033[32m%3s : 0x%8.8x           0x%8.8x\033[0m\n",regname[j],tmp.gpr[j],top -> regs[j]);
+        
+			if(tmp.pc != top -> pc)
+				printf("\033[31m%3s : 0x%8.8x           0x%8.8x\033[0m\n","pc",tmp.pc, top -> pc);
+			else
+				printf("\033[32m%3s : 0x%8.8x           0x%8.8x\033[0m\n","pc",tmp.pc ,top -> pc);
+
+			printf("\033[31m----------------------------------------------------------------\033[0m\n");
+    		is_simulating = false;
+		}
 	}
 
 }
