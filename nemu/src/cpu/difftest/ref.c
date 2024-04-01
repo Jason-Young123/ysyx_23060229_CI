@@ -62,6 +62,10 @@ __EXPORT void difftest_regcpy(void *dut, bool direction) {
 			cpu.gpr[i] = npc_dut -> gpr[i];
 		}
 		cpu.pc = npc_dut -> pc;
+		printf(";;;%x\n",cpu.gpr[14]);
+		printf(";;;%x\n",cpu.gpr[15]);
+		printf(";;;%x\n",cpu.pc);
+
 	}
 	else{//由参考送给被测对象，即NEMU送给NPC
 		for(int i = 0; i < NR_GPR; i++)

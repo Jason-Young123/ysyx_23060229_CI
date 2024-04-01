@@ -114,7 +114,7 @@ void pmem_write(uint32_t addr, uint8_t byte, uint32_t data){
 
 
 extern "C" int pmem_read_(uint32_t raddr, bool ren){
-	printf("in pmem_read_, %x\n",raddr);
+	//printf("in pmem_read_, %x\n",raddr);
 	if(!ren)
 		return 0;
 
