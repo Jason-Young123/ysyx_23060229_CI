@@ -66,6 +66,7 @@ void init_difftest(const char* ref_so_file, long img_size, int port){
 
 void difftest_step(){
 	if(difftest_skip){
+		printf("skip\n");
 		difftest_exec(1);
 		struct npc_context_t npc_cpu;
     	for(int i = 0; i < 32; i++)
