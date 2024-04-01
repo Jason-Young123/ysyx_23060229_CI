@@ -114,13 +114,13 @@ void pmem_write(uint32_t addr, uint8_t byte, uint32_t data){
 
 
 extern "C" int pmem_read_(uint32_t raddr, bool ren){
-	//printf("in pmem_read_\n");
+	printf("in pmem_read_, %x\n",raddr);
 	if(!ren)
 		return 0;
 
 	//有关时钟
 	if(raddr >= RTC_ADDR && raddr <= RTC_ADDR + 7){
-		printf("%x\n",raddr);
+		//printf("%x\n",raddr);
 		difftest_skip = true;
 		if(raddr == RTC_ADDR){
 			timer_addr[0] = (uint32_t)get_time();
