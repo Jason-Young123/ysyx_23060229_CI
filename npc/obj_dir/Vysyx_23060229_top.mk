@@ -4,7 +4,7 @@
 # Execute this makefile from the object directory:
 #    make -f Vysyx_23060229_top.mk
 
-default: Vysyx_23060229_top__ALL.a
+default: Vysyx_23060229_top
 
 ### Constants...
 # Perl executable (from $PERL)
@@ -38,12 +38,28 @@ VM_USER_CFLAGS = \
 
 # User LDLIBS (from -LDFLAGS on Verilator command line)
 VM_USER_LDLIBS = \
+	/lib/x86_64-linux-gnu/libreadline.so \
 
 # User .cpp files (from .cpp's on Verilator command line)
 VM_USER_CLASSES = \
+	difftest \
+	engine \
+	memory \
+	timer \
+	register \
+	expr \
+	sdb \
+	watchpoint \
+	wavesim \
 
 # User .cpp directories (from .cpp's on Verilator command line)
 VM_USER_DIR = \
+	./wavesim_file \
+	./wavesim_file/difftest \
+	./wavesim_file/engine \
+	./wavesim_file/memory \
+	./wavesim_file/register \
+	./wavesim_file/sdb \
 
 
 ### Default rules...
@@ -51,5 +67,32 @@ VM_USER_DIR = \
 include Vysyx_23060229_top_classes.mk
 # Include global rules
 include $(VERILATOR_ROOT)/include/verilated.mk
+
+### Executable rules... (from --exe)
+VPATH += $(VM_USER_DIR)
+
+difftest.o: ./wavesim_file/difftest/difftest.cpp
+	$(OBJCACHE) $(CXX) $(CXXFLAGS) $(CPPFLAGS) $(OPT_FAST) -c -o $@ $<
+engine.o: ./wavesim_file/engine/engine.cpp
+	$(OBJCACHE) $(CXX) $(CXXFLAGS) $(CPPFLAGS) $(OPT_FAST) -c -o $@ $<
+memory.o: ./wavesim_file/memory/memory.cpp
+	$(OBJCACHE) $(CXX) $(CXXFLAGS) $(CPPFLAGS) $(OPT_FAST) -c -o $@ $<
+timer.o: ./wavesim_file/memory/timer.cpp
+	$(OBJCACHE) $(CXX) $(CXXFLAGS) $(CPPFLAGS) $(OPT_FAST) -c -o $@ $<
+register.o: ./wavesim_file/register/register.cpp
+	$(OBJCACHE) $(CXX) $(CXXFLAGS) $(CPPFLAGS) $(OPT_FAST) -c -o $@ $<
+expr.o: ./wavesim_file/sdb/expr.cpp
+	$(OBJCACHE) $(CXX) $(CXXFLAGS) $(CPPFLAGS) $(OPT_FAST) -c -o $@ $<
+sdb.o: ./wavesim_file/sdb/sdb.cpp
+	$(OBJCACHE) $(CXX) $(CXXFLAGS) $(CPPFLAGS) $(OPT_FAST) -c -o $@ $<
+watchpoint.o: ./wavesim_file/sdb/watchpoint.cpp
+	$(OBJCACHE) $(CXX) $(CXXFLAGS) $(CPPFLAGS) $(OPT_FAST) -c -o $@ $<
+wavesim.o: ./wavesim_file/wavesim.cpp
+	$(OBJCACHE) $(CXX) $(CXXFLAGS) $(CPPFLAGS) $(OPT_FAST) -c -o $@ $<
+
+### Link rules... (from --exe)
+Vysyx_23060229_top: $(VK_USER_OBJS) $(VK_GLOBAL_OBJS) $(VM_PREFIX)__ALL.a $(VM_HIER_LIBS)
+	$(LINK) $(LDFLAGS) $^ $(LOADLIBES) $(LDLIBS) $(LIBS) $(SC_LIBS) -o $@
+
 
 # Verilated -*- Makefile -*-
