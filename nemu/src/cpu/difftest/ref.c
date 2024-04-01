@@ -81,6 +81,8 @@ __EXPORT void difftest_raise_intr(word_t NO) {
 __EXPORT void difftest_init(int port) {
   void init_mem();
   init_mem();
+  void init_device();
+  init_device();//只有init_device，difftest才能启用nemu中的设备
   /* Perform ISA dependent initialization. */
   init_isa();
 }
