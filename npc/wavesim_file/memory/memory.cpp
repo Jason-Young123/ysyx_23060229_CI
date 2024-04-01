@@ -23,8 +23,8 @@ uint8_t memory[MEM_SIZE] = { 0x93,0x80,0x10,0x00,//addi,R(1) += 1, R(1) = 1
 uint8_t serial_port[8] = {0,0,0,0,0,0,0,0};
 uint32_t timer_addr[2] = {0};
 
-
-extern bool difftest_skip;
+extern bool difftest_to_skip;
+extern bool difftest_skipping;
 
 long init_mem(const char* file){
     printf("---------------------------------init_mem----------------------------------\n");
@@ -121,7 +121,7 @@ extern "C" int pmem_read_(uint32_t raddr, bool ren){
 	//有关时钟
 	if(raddr >= RTC_ADDR && raddr <= RTC_ADDR + 7){
 		//printf("%x\n",raddr);
-		difftest_skip = true;
+		difftest_to_skip = true;
 		if(raddr == RTC_ADDR){
 			timer_addr[0] = (uint32_t)get_time();
 			return timer_addr[0];
@@ -132,6 +132,8 @@ extern "C" int pmem_read_(uint32_t raddr, bool ren){
 		}
 		return 0;
 	}
+
+	difftest_to_skip = false;
 
 	if(raddr < 0x80000000 || raddr > 0x8fffffff){
         printf("\033[31maddr %#8.8x is not valid for reading\033[0m\n",raddr);

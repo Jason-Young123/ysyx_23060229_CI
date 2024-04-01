@@ -17,7 +17,8 @@ using namespace std;
 uint64_t sim_time = 0;
 bool is_simulating = false;
 bool wp_triggered = false;
-bool difftest_skip = false;
+bool difftest_to_skip = false;
+bool difftest_skipping = false;
 
 
 const char* ref_so_file = "/home/jason/Desktop/ysyx-workbench/nemu/build/riscv32-nemu-interpreter-so";

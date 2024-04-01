@@ -3,6 +3,8 @@
 
 extern bool is_simulating;
 extern bool wp_triggered;
+extern bool difftest_to_skip;
+extern bool difftest_skipping;
 
 
 void init_engine(Vysyx_23060229_top* top, VerilatedVcdC* m_trace, uint64_t* sim_time){
@@ -35,7 +37,10 @@ void exec_once(Vysyx_23060229_top* top, VerilatedVcdC* m_trace, uint64_t* sim_ti
 
     //print the previous inst having been decoded
     //printf("pc: %#8.8x  inst: %#8.8x\n", top->pc,top->inst);
-
+	
+	if(difftest_to_skip)
+		difftest_skipping = true;
+	
 	top -> clk = 1;//这里会触发hit_good/bad_trap，从而导致is_simulating = 0
     top -> eval(); 
 #ifdef CONFIG_WAVEREC

@@ -8,7 +8,8 @@ void (*difftest_raise_intr)(uint64_t NO) = NULL;
 
 
 extern bool is_simulating;
-extern bool difftest_skip;
+extern bool difftest_to_skip;
+extern bool difftest_skipping;
 extern Vysyx_23060229_top* top;
 extern uint8_t memory[];
 extern char* regname[];
@@ -65,7 +66,7 @@ void init_difftest(const char* ref_so_file, long img_size, int port){
 
 
 void difftest_step(){
-	if(difftest_skip){
+	if(difftest_skipping){
 		printf("skip\n");
 		difftest_exec(1);
 		struct npc_context_t npc_cpu;
@@ -76,7 +77,7 @@ void difftest_step(){
 		printf("%x\n",npc_cpu.gpr[14]);
 		printf("%x\n",npc_cpu.gpr[15]);
 		difftest_regcpy(&npc_cpu, NPC_TO_NEMU);
-		difftest_skip = false;
+		difftest_skipping = false;
 	}
 
 	else{
