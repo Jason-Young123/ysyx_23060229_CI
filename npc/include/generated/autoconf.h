@@ -4,4 +4,5 @@
  * NPC Configuration Menu
  *
  */
+#define CONFIG_DIFFTEST 1
 #define CONFIG_WP 1
