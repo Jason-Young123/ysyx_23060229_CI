@@ -73,6 +73,7 @@ void difftest_step(){
         	npc_cpu.gpr[i] = top -> regs[i];
     	npc_cpu.pc = top -> pc;
 		printf("%x\n",npc_cpu.pc);
+		printf("%x\n",npc_cpu.gpr[14]);
 		printf("%x\n",npc_cpu.gpr[15]);
 		difftest_regcpy(&npc_cpu, NPC_TO_NEMU);
 		difftest_skip = false;
