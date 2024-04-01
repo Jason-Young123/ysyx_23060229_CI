@@ -67,8 +67,8 @@ module ysyx_23060229_EXU(
 				`ysyx_23060229_R_AND:   begin reg_din = src1 & src2;    	mem_wdata = 0;    	pcout = pc + 4; end
 				`ysyx_23060229_R_SLT:   begin reg_din = scomp_out; 			mem_wdata = 0;    	pcout = pc + 4; end
 				`ysyx_23060229_R_SLTU:  begin reg_din = src1 < src2;    	mem_wdata = 0;    	pcout = pc + 4; end
-				`ysyx_23060229_R_SLL:   begin reg_din = src1 << src2;  		mem_wdata = 0;    	pcout = pc + 4; end//!
-				`ysyx_23060229_R_SRL:   begin reg_din = src1 >> src2;   	mem_wdata = 0;    	pcout = pc + 4; end
+				`ysyx_23060229_R_SLL:   begin reg_din = src1 << src2[4:0];	mem_wdata = 0;    	pcout = pc + 4; end//!
+				`ysyx_23060229_R_SRL:   begin reg_din = src1 >> src2[4:0];  mem_wdata = 0;    	pcout = pc + 4; end
 				`ysyx_23060229_R_SRA:   begin reg_din = arith_shifter_out;	mem_wdata = 0;		pcout = pc + 4; end//!
 				/* verilator lint_on WIDTHEXPAND */
 
@@ -100,8 +100,8 @@ module ysyx_23060229_EXU(
 				`ysyx_23060229_I_SLTI:	begin reg_din = scomp_out1;				mem_wdata = 0; 	pcout = pc + 4; end
 				`ysyx_23060229_I_SLTIU:	begin reg_din = src1 < imm; 			mem_wdata = 0;	pcout = pc + 4; end
 				
-				`ysyx_23060229_I_SLLI:	begin reg_din = src1 << imm;			mem_wdata = 0; 	pcout = pc + 4; end//!
-				`ysyx_23060229_I_SRLI:	begin reg_din = src1 >> imm; 			mem_wdata = 0;	pcout = pc + 4; end
+				`ysyx_23060229_I_SLLI:	begin reg_din = src1 << imm[4:0];		mem_wdata = 0; 	pcout = pc + 4; end//!
+				`ysyx_23060229_I_SRLI:	begin reg_din = src1 >> imm[4:0]; 		mem_wdata = 0;	pcout = pc + 4; end
 				`ysyx_23060229_I_SRAI:	begin reg_din = arith_shifter_out1;		mem_wdata = 0;	pcout = pc + 4; end//!
 
 				`ysyx_23060229_I_JALR:	begin reg_din = pc + 4;					mem_wdata = 0;	pcout = (src1 + imm)&(32'hffff_fffe); end
