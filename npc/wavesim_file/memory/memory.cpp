@@ -120,6 +120,7 @@ extern "C" int pmem_read_(uint32_t raddr, bool ren){
 
 	//有关时钟
 	if(raddr >= RTC_ADDR && raddr <= RTC_ADDR + 7){
+		printf("%x\n",raddr);
 		difftest_skip = true;
 		if(raddr == RTC_ADDR){
 			timer_addr[0] = (uint32_t)get_time();
