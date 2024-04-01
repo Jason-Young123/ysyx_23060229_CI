@@ -46,7 +46,7 @@ constrclean:
 
 
 boardsim:
-	$(call git_commit, "boardsim in exp1")
+	$(call git_commit, "boardsim in npc")
 	verilator $(VERILATOR_CFLAGS) \
 	--top-module $(TOP_MODULE) $(VFILE)/$(TOP_MODULE).v  $(CONSTR)/auto_bind.cpp  $(BOARDSIM_FILE)/boardsim.cpp  $(NVBOARD_HOME)/build/nvboard.a \
     -CFLAGS -MMD -CFLAGS -O3 -CFLAGS -I/usr/include/SDL2 -CFLAGS -D_REENTRANT -CFLAGS -I/home/jason/nvboard-master/usr/include -CFLAGS -DTOP_NAME="\"V$(TOP_MODULE)\"" -LDFLAGS -lSDL2 -LDFLAGS -lSDL2_image -LDFLAGS -lSDL2_ttf \
@@ -61,7 +61,7 @@ boardclean:
 
 
 wavesim:
-	$(call git_commit, "wavesim in exp1")
+	$(call git_commit, "wavesim in npc")
 	verilator -Wall --trace -cc $(VFILE)/$(TOP_MODULE).v --exe $(WAVESIM_FILE)/wavesim.cpp $(SDB_FILE) $(EXPR_FILE)\
 		$(WP_FILE)  $(ENGINE_FILE)	$(MEMORY_FILE)  $(REGISTER_FILE)  $(DIFFTEST_FILE) $(TIMER_FILE)\
 		-D /lib/x86_64-linux-gnu/libreadline.so  -I$(VFILE) $(TIMING)
