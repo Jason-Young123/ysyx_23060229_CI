@@ -60,7 +60,7 @@ void init_vga() {
 
 
 //由memory.cpp调用
-void update_sync_addr(uint32_t waddr, int sync, char wmask){
+void update_vgactl_addr(uint32_t waddr, int sync, char wmask){
 	if(waddr == VGACTL_ADDR + 4)
 		vgactl_port_base[1] = sync;
 }
