@@ -22,7 +22,7 @@ void __am_gpu_fbdraw(AM_GPU_FBDRAW_T *ctl) {
   	uint32_t* color_buf = (uint32_t*)ctl -> pixels;
 	for(int x = 0; x < ctl -> w; x++){
 		for(int y = 0; y < ctl -> h; y++){
-			outl(FB_ADDR + (y + ctl -> y)*400 + (x + ctl -> x), color_buf[y*ctl->w+x]);
+			outl(FB_ADDR + (y + ctl -> y)*400 + (x + ctl -> x), color_buf[0]);
 		}
 	}
 		
