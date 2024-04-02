@@ -18,8 +18,8 @@
 #define VGACTL_ADDR     (DEVICE_BASE + 0x0000100)
 
 
-#define SCREEN_W 400
-#define SCREEN_H 300
+#define SCREEN_W 800
+#define SCREEN_H 600
 #define SCREEN_SIZE SCREEN_W * SCREEN_H * sizeof(int)
 
 
