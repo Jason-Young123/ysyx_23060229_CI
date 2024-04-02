@@ -24,6 +24,7 @@ static void init_screen() {
   	texture = SDL_CreateTexture(renderer, SDL_PIXELFORMAT_ARGB8888,
       		SDL_TEXTUREACCESS_STATIC, SCREEN_W, SCREEN_H);
   	SDL_RenderPresent(renderer);
+	printf("init done\n");
 }
 
 
@@ -67,7 +68,7 @@ void update_vgactl_addr(uint32_t waddr, int sync, char wmask){
 
 
 void update_fb_addr(uint32_t waddr, int color, char wmask){
-	printf("in update fb\n");
+	//printf("in update fb\n");
 	vmem[waddr - FB_ADDR] = (uint8_t)(color);
 	vmem[waddr - FB_ADDR + 1] = (uint8_t)(color >> 8);
 	vmem[waddr - FB_ADDR + 2] = (uint8_t)(color >> 16);
