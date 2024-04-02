@@ -26,8 +26,8 @@ void __am_gpu_fbdraw(AM_GPU_FBDRAW_T *ctl) {
 			//outl(FB_ADDR + y * 400 + x, 0x00ff0000);
 		}
 	}*/
-	for(int i = 0; i < 400 * 100; ++i)
-		outl(FB_ADDR + 4*i, 0x00ff0000);
+	for(int i = 0; i < 400*50; ++i)
+		outl(FB_ADDR + 4*i, 0x00ffffff);
 	
 	if (ctl->sync)
     	outl(SYNC_ADDR, 1);
