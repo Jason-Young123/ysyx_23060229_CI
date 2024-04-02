@@ -3,13 +3,19 @@
 
 #define SYNC_ADDR (VGACTL_ADDR + 4)
 
+#define SCREEN_W 400
+#define SCREEN_H 300
+
+//#define SCREEN_W (MUXDEF(CONFIG_VGA_SIZE_800x600, 800, 400))
+//#define SCREEN_H (MUXDEF(CONFIG_VGA_SIZE_800x600, 600, 300))
+
 void __am_gpu_init() {
 }
 
 void __am_gpu_config(AM_GPU_CONFIG_T *cfg) {
   *cfg = (AM_GPU_CONFIG_T) {
     .present = true, .has_accel = false,
-    .width = 400, .height = 300,
+    .width = SCREEN_W, .height = SCREEN_H,
     .vmemsz = 0
   };
 }
@@ -22,7 +28,7 @@ void __am_gpu_fbdraw(AM_GPU_FBDRAW_T *ctl) {
   	uint32_t* color_buf = (uint32_t*)ctl -> pixels;
 	for(int y = 0; y < ctl -> h; y++){
 		for(int x = 0; x < ctl -> w; x++){
-			outl(FB_ADDR + 4*((y + ctl -> y)*400 + (x + ctl -> x)), color_buf[0]);
+			outl(FB_ADDR + 4*((y + ctl -> y)*SCREEN_W + (x + ctl -> x)), color_buf[0]);
 			//outl(FB_ADDR + y * 400 + x, 0x00ff0000);
 		}
 	}
