@@ -67,6 +67,7 @@ void update_vgactl_addr(uint32_t waddr, int sync, char wmask){
 
 
 void update_fb_addr(uint32_t waddr, int color, char wmask){
+	printf("in update fb\n");
 	vmem[waddr - FB_ADDR] = (uint8_t)(color);
 	vmem[waddr - FB_ADDR + 1] = (uint8_t)(color >> 8);
 	vmem[waddr - FB_ADDR + 2] = (uint8_t)(color >> 16);
