@@ -5,7 +5,7 @@
 
 
 
-static void *vmem = NULL;
+static uint8_t *vmem = NULL;
 static uint32_t *vgactl_port_base = NULL;
 
 
@@ -15,18 +15,15 @@ static SDL_Texture *texture = NULL;
 
 
 static void init_screen() {
-  SDL_Window *window = NULL;
-  char title[128];
-  sprintf(title, "%s-NEMU", str(__GUEST_ISA__));
-  SDL_Init(SDL_INIT_VIDEO);
-  SDL_CreateWindowAndRenderer(
-      SCREEN_W * (MUXDEF(CONFIG_VGA_SIZE_400x300, 2, 1)),
-      SCREEN_H * (MUXDEF(CONFIG_VGA_SIZE_400x300, 2, 1)),
-      0, &window, &renderer);
-  SDL_SetWindowTitle(window, title);
-  texture = SDL_CreateTexture(renderer, SDL_PIXELFORMAT_ARGB8888,
-      SDL_TEXTUREACCESS_STATIC, SCREEN_W, SCREEN_H);
-  SDL_RenderPresent(renderer);
+  	SDL_Window *window = NULL;
+  	char title[128];
+  	
+	SDL_Init(SDL_INIT_VIDEO);
+  	SDL_CreateWindowAndRenderer(SCREEN_W,SCREEN_H, 0, &window, &renderer);
+  	SDL_SetWindowTitle(window, title);
+  	texture = SDL_CreateTexture(renderer, SDL_PIXELFORMAT_ARGB8888,
+      		SDL_TEXTUREACCESS_STATIC, SCREEN_W, SCREEN_H);
+  	SDL_RenderPresent(renderer);
 }
 
 
@@ -74,7 +71,6 @@ void update_fb_addr(uint32_t waddr, int color, char wmask){
 	vmem[waddr - FB_ADDR + 1] = (uint8_t)(color >> 8);
 	vmem[waddr - FB_ADDR + 2] = (uint8_t)(color >> 16);
 	vmem[waddr - FB_ADDR + 3] = (uint8_t)(color >> 24);
-
 }
 
 
