@@ -37,7 +37,7 @@ uint64_t get_time(); //in timer.cpp
 
 void init_vga();
 void update_vga_screen();
-void update_sync_addr(uint32_t waddr, int sync, char wmask);
+void update_vgactl_addr(uint32_t waddr, int sync, char wmask);
 void update_fb_addr(uint32_t waddr, int color, char wmask);
 
 
