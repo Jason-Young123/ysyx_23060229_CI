@@ -147,7 +147,7 @@ extern "C" int pmem_read_(uint32_t raddr, bool ren){
 
 
 extern "C" void pmem_write_(uint32_t waddr, int wdata, char wmask){
-    printf("in pmem_write, addr = %#8.8x\n",addr);
+    printf("in pmem_write, addr = %#8.8x\n",waddr);
     //写串口
 	if(waddr >= SERIAL_PORT && waddr <= SERIAL_PORT + 7){
 		assert(wmask == 0b00000001);
