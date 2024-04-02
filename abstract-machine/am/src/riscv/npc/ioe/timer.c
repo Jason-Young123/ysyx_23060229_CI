@@ -1,6 +1,6 @@
 #include <am.h>
 #include <riscv/riscv.h>
-#include "include.h"
+#include <npc.h>
 
 void __am_timer_init() {
 }

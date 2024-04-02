@@ -63,6 +63,7 @@ LINKAGE   = $(OBJS) \
     $(addsuffix /build/, $(addprefix $(AM_HOME)/, $(LIBS))), \
     $(LIBS) ))
 
+
 ## 3. General Compilation Flags
 
 ### (Cross) compilers, e.g., mips-linux-gnu-g++
@@ -105,6 +106,12 @@ endif
 ## 5. Compilation Rules
 
 ### Rule (compile): a single `.c` -> `.o` (gcc)
+	#echo "work dir is $(WORK_DIR)"
+	#echo "dst dir is $(DST_DIR)"
+	#echo "src $(SRCS)"
+	#echo "objs $(OBJS)"
+	#echo "libs $(LIBS)"
+	#echo "linkage $(LINKAGE)"
 $(DST_DIR)/%.o: %.c
 	@mkdir -p $(dir $@) && echo + CC $<
 	@$(CC) -std=gnu11 $(CFLAGS) -c -o $@ $(realpath $<)
