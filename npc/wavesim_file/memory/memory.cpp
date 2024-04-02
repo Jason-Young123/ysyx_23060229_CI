@@ -1,14 +1,6 @@
 #include "memory.h"
 
-#define DEVICE_BASE 0xa0000000
-#define SERIAL_PORT     (DEVICE_BASE + 0x00003f8)
-#define KBD_ADDR        (DEVICE_BASE + 0x0000060)
-#define RTC_ADDR        (DEVICE_BASE + 0x0000048)
-#define VGACTL_ADDR     (DEVICE_BASE + 0x0000100)
-#define AUDIO_ADDR      (DEVICE_BASE + 0x0000200)
-#define DISK_ADDR       (DEVICE_BASE + 0x0000300)
-//#define FB_ADDR         (MMIO_BASE   + 0x1000000)
-//#define AUDIO_SBUF_ADDR (MMIO_BASE   + 0x1200000)
+
 
 uint8_t memory[MEM_SIZE] = { 0x93,0x80,0x10,0x00,//addi,R(1) += 1, R(1) = 1
                                     0x93,0x83,0x20,0x00,//addi,R(7) = R(1) + 2 = 3
@@ -147,17 +139,37 @@ extern "C" int pmem_read_(uint32_t raddr, bool ren){
 
 
 
-//0xa00003f8 - 0xa00003ff
+//这边需要模拟 outl、inl等函数的功能
+//0xa00003f8 - 0xa00003ff 串口
+//0xa0000100 - 0xa0000103 GPU屏幕尺寸
+//0xa0000104 - 0xa0000107 GPU的同步寄存器
+//0xa1000000 - 0xa1000000 + 300*400*4 - 1  帧缓冲寄存器
+
 
 extern "C" void pmem_write_(uint32_t waddr, int wdata, char wmask){
     //printf("in pmem_write, addr = %#8.8x\n",addr);
-    if(waddr >= SERIAL_PORT && waddr <= SERIAL_PORT + 7){
+    //写串口
+	if(waddr >= SERIAL_PORT && waddr <= SERIAL_PORT + 7){
 		assert(wmask == 0b00000001);
 		serial_port[0] = (uint8_t)wdata;
 		putc((uint8_t)wdata, stderr);
 		return;
 	}
-		
+
+	//写VGA控制寄存器
+	if(waddr >= VGACTL_ADDR && waddr <= VGACTL_ADDR + 7){
+		update_vgactl_addr(waddr, wdata, wmask);
+		return;
+	}
+
+	//写帧缓冲寄存器
+	if(waddr >= FB_ADDR && waddr <= FB_ADDR + SCREEN_SIZE - 1){
+		update_fb_addr(waddr, wdata, wmask);
+		return;
+	}
+
+
+	//非法地址
 	if(waddr < 0x80000000 || waddr > 0x8fffffff){
         printf("\033[31maddr %#8.8x is not valid for writing\033[0m\n", waddr);
         return;
@@ -179,4 +191,8 @@ extern "C" void pmem_write_(uint32_t waddr, int wdata, char wmask){
 
 
 
+void update_devices(){
+	update_vga_screen();
+
+}
 

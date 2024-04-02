@@ -63,6 +63,8 @@ void exec_once(Vysyx_23060229_top* top, VerilatedVcdC* m_trace, uint64_t* sim_ti
 #ifdef CONFIG_DIFFTEST
 	difftest_step();
 #endif
+
+	update_devices();
 }
 
 
