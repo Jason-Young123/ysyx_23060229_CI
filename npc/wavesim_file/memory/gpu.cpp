@@ -50,7 +50,7 @@ void init_vga() {
 	vgactl_port_base = (uint32_t*)malloc(sizeof(uint32_t)*2);
 	vgactl_port_base[0] = (SCREEN_W << 16) | SCREEN_H;
 
-	vmem = (uint8_t*)malloc(sizeof(uint8_t)*SCREEN_SIZE)
+	vmem = (uint8_t*)malloc(sizeof(uint8_t)*SCREEN_SIZE);
   
 	init_screen();
 	memset(vmem, 0, SCREEN_SIZE);
