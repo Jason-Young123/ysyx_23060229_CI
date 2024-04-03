@@ -203,7 +203,9 @@ void init_devices(){
 
 
 void update_devices(){
+#ifdef CONFIG_GPU
 	update_vga_screen();
+#endif
 
   	/*if (SDL_PollEvent(&event)) {
     	//fflush(stdout);
