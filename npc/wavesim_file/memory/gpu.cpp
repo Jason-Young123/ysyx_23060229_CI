@@ -39,6 +39,7 @@ static inline void update_screen() {
 
 
 void update_vga_screen() {
+	printf("update\n");
     if(vgactl_port_base[1] == 1){
         update_screen();
         vgactl_port_base[1] = 0;

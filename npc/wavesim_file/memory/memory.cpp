@@ -201,7 +201,7 @@ void update_devices(){
 
 	SDL_Event event;
 	if(SDL_PollEvent(&event)){
-		;
+		update_vga_screen();
 	}
 	else
 		update_vga_screen();
