@@ -2,10 +2,10 @@
 
 TOP_MODULE = ysyx_23060229_top
 
-CONSTR = ./constr
-VFILE = ./vfile
-BOARDSIM_FILE = ./boardsim_file
-WAVESIM_FILE = ./wavesim_file
+CONSTR = $(NPC_HOME)/constr
+VFILE = $(NPC_HOME)/vfile
+BOARDSIM_FILE = $(NPC_HOME)/boardsim_file
+WAVESIM_FILE = $(NPC_HOME)/wavesim_file
 
 VERILATOR_CFLAGS += -MMD --build -cc -O3 --x-assign fast \
 					--x-initial fast --noassert
