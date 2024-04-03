@@ -30,20 +30,36 @@ VerilatedVcdC* m_trace = new VerilatedVcdC;
 
 int main(int argc, char *argv[]){
 	long size = init_mem(argv[1]);
+	
+	printf("Checking Devices:\n");
 	init_devices();
-    //srand((int)time(0));// to generate random numbers
-    //Vysyx_23060229_top* top = new Vysyx_23060229_top;
 
+
+	printf("\nChecking Options:\n");
 #ifdef CONFIG_WAVEREC
-	printf("\033[36mWave record is ON\033[0m\n");
+	printf("\033[36mWave Record is ON\033[0m\n");
     // to enable wave tracing
     Verilated::traceEverOn(true);
     //VerilatedVcdC* m_trace = new VerilatedVcdC;
     top -> trace(m_trace, 5);
     m_trace -> open("./wavesim_file/wave.vcd");
 #else
-	printf("\033[36mWave record is OFF\033[0m\n");
+	printf("\033[36mWave Record is OFF\033[0m\n");
 #endif
+
+#ifdef CONFIG_WP
+	printf("\033[36mWatchpoint is ON\033[0m\n");
+#else
+	printf("\033[36mWatchpoint is OFF\033[0m\n");
+#endif
+
+#ifdef CONFIG_DIFFTEST
+	printf("\033[36mDifftest is ON\033[0m\n");
+	init_difftest(ref_so_file, size, 0);
+#else
+	printf("\033[36mDifftest is OFF\033[0m\n");
+#endif
+
 
     // simulation start
     cout << "simulation started" << endl;
@@ -51,7 +67,6 @@ int main(int argc, char *argv[]){
 
 	init_engine(top, m_trace, &sim_time);
 	is_simulating = true;
-	init_difftest(ref_so_file, size, 0);//开启difftest
 	init_sdb();
 	
 

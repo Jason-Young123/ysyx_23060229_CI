@@ -19,7 +19,6 @@ extern char* regname[];
 
 
 void init_difftest(const char* ref_so_file, long img_size, int port){
-#ifdef CONFIG_DIFFTEST
 	assert(ref_so_file != NULL);
 
 	void* handler;
@@ -41,10 +40,6 @@ void init_difftest(const char* ref_so_file, long img_size, int port){
 	void (*difftest_init)(int) = reinterpret_cast<void (*)(int)> (dlsym(handler, "difftest_init"));
 	assert(difftest_init);
 
-	printf("\033[36mDifftest is on.\n");
-	printf("The result of each instruction will be compared with:\n%s\033[0m\n", ref_so_file);
-
-	
 	difftest_init(port);
 	
 	difftest_memcpy(RESET_VECTOR, memory, img_size, NPC_TO_NEMU);
@@ -57,9 +52,6 @@ void init_difftest(const char* ref_so_file, long img_size, int port){
 
 	difftest_regcpy(&npc_cpu, NPC_TO_NEMU);
 
-#else
-	printf("\033[36mDifftest is off.\033[0m\n");
-#endif
 }
 
 

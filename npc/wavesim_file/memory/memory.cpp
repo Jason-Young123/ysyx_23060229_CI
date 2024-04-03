@@ -190,7 +190,6 @@ extern "C" void pmem_write_(uint32_t waddr, int wdata, char wmask){
 
 
 void init_devices(){
-	printf("Checking devices :\n");
 	init_vga();
 	printf("\033[36mGPU is ON\033[0m\n");
 }
