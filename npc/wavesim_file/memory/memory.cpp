@@ -199,7 +199,8 @@ void update_devices(){
 	update_vga_screen();
 
 	SDL_Event event;
-  	while (SDL_PollEvent(&event)) {
+	SDL_PollEvent(&event);
+  	/*if (SDL_PollEvent(&event)) {
     	//fflush(stdout);
     	//printf("something happened, %x\n", event.type);
     	switch (event.type) {
@@ -215,7 +216,7 @@ void update_devices(){
         	//send_key(k, is_keydown);
       		default: break;
    		}
-  	}
+  	}*/
 
 }
 
