@@ -7,7 +7,7 @@
 //#include "./register/register.h"
 #include <memory/memory.h>
 #include <engine/engine.h>
-#include </sdb/sdb.h>
+#include <sdb/sdb.h>
 #include <difftest/difftest.h>
 
 using namespace std;
