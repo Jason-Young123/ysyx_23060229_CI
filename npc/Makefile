@@ -13,7 +13,7 @@ VERILATOR_CFLAGS += -MMD --build -cc -O3 --x-assign fast \
 
 
 CFLAGS += -I$(NPC_HOME)/wavesim_file
-LDFLAGS += -lSDL2\
+LDFLAGS += -lSDL2
 LIBS += /lib/x86_64-linux-gnu/libreadline.so\
 	   /lib/x86_64-linux-gnu/libSDL2.so
 
