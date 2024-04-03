@@ -67,6 +67,7 @@ __EXPORT void difftest_regcpy(void *dut, bool direction) {
 		for(int i = 0; i < NR_GPR; i++)
 			npc_dut -> gpr[i] = cpu.gpr[i];
 		npc_dut -> pc = cpu.pc;
+		printf("test1\n");
 	}
 }
 
