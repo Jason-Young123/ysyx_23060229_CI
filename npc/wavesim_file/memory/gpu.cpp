@@ -17,6 +17,7 @@ static SDL_Texture *texture = NULL;
 static void init_screen() {
   	SDL_Window *window = NULL;
   	char title[128];
+	sprintf(title, "riscv32e-NPC");
   	
 	SDL_Init(SDL_INIT_VIDEO);
   	SDL_CreateWindowAndRenderer(SCREEN_W * 2,SCREEN_H * 2, 0, &window, &renderer);
