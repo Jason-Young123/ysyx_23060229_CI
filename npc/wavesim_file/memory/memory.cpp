@@ -62,7 +62,7 @@ extern "C" int pmem_read_(uint32_t raddr, bool ren){
 #ifdef CONFIG_TIMER
 	//有关时钟
 	if(raddr >= RTC_ADDR && raddr <= RTC_ADDR + 7){
-		return fetch_timer_addr();
+		return fetch_timer_addr(raddr);
 	}
 #endif
 
