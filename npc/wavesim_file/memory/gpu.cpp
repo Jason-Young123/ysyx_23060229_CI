@@ -29,6 +29,8 @@ static void init_screen() {
 
 
 static inline void update_screen() {
+	SDL_Event event;
+	while(SDL_PollEvent(&event));
 	SDL_UpdateTexture(texture, NULL, (void *)vmem, SCREEN_W * sizeof(uint32_t));
   	SDL_RenderClear(renderer);
   	SDL_RenderCopy(renderer, texture, NULL, NULL);
@@ -38,10 +40,10 @@ static inline void update_screen() {
 
 
 
-SDL_Event event;
+//SDL_Event event;
 
 void update_vga_screen() {
-	SDL_PollEvent(&event);
+	//SDL_PollEvent(&event);
 	//while(SDL_PollEvent(&event));
     if(vgactl_port_base[1] == 1){
         update_screen();
