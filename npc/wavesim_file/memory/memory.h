@@ -35,10 +35,13 @@ extern "C" void pmem_write_(uint32_t waddr, int wdata, char wmask);
 void init_devices();
 void update_devices();
 
+//serial
+void update_serial_addr(uint32_t waddr, int wdata, char wmask);
 
-uint64_t get_time(); //in timer.cpp
+//timer
+int fetch_timer_addr(uint32_t raddr);
 
-
+//gpu
 void init_vga();
 void update_vga_screen();
 void update_vgactl_addr(uint32_t waddr, int sync, char wmask);

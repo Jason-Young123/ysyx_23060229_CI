@@ -12,8 +12,8 @@ uint8_t memory[MEM_SIZE] = { 0x93,0x80,0x10,0x00,//addi,R(1) += 1, R(1) = 1
                                     0x88,0x77,0x66,0x55 //data for rewriting
                                     };
 
-uint8_t serial_port[8] = {0,0,0,0,0,0,0,0};
-uint32_t timer_addr[2] = {0};
+//uint8_t serial_port[8] = {0,0,0,0,0,0,0,0};
+//uint32_t timer_addr[2] = {0};
 
 extern bool difftest_to_skip;
 extern bool difftest_skipping;
@@ -51,57 +51,6 @@ long init_mem(const char* file){
 
 
 
-uint32_t pmem_read(uint32_t addr, uint8_t byte){
-    if(addr < 0x80000000 || addr > 0x8fffffff){
-        printf("\033[31maddr %#8.8x is not valid for reading\033[0m\n",addr);
-        return 0;
-    }
-    addr = addr - 0x80000000;
-    if(byte == 0b001)//unsigned 1 byte
-        return (uint32_t)memory[addr];
-
-    else if(byte == 0b010)//unsigned 2 bytes
-        return (uint32_t)((memory[addr+1]<<8)|memory[addr]);
-
-    else if(byte == 0b100)//4 bytes
-        return (memory[addr] | (uint32_t)memory[addr+1] << 8
-                | (uint32_t)memory[addr+2] << 16
-                | (uint32_t)memory[addr+3] << 24);
-
-    else if(byte == 0b101)//signed 1 byte
-        return memory[addr] >> 7 ? (0xffffff00|memory[addr]) : (uint32_t)memory[addr];
-
-    else if(byte == 0b110)//signed 2 bytes
-        return memory[addr+1] >> 7 ? (0xffff0000|(memory[addr+1]<<8)|memory[addr]) :
-                                    (uint32_t)((memory[addr+1]<<8)|memory[addr]);
-
-    else
-        return 0;
-}
-
-
-
-void pmem_write(uint32_t addr, uint8_t byte, uint32_t data){
-    //printf("in pmem_write, addr = %#8.8x\n",addr);
-    if(addr < 0x80000000 || addr > 0x8fffffff){
-        printf("\033[31maddr %#8.8x is not valid for writing\033[0m\n",addr);
-        return;
-    }
-    addr = addr - 0x80000000;
-    if(byte == 0b01)
-        memory[addr] = (uint8_t)data;
-    else if(byte == 0b10){
-        memory[addr] = (uint8_t)data;
-        memory[addr+1] = (uint8_t)(data >> 8);
-    }
-    else if(byte == 0b11){
-        memory[addr] = (uint8_t)data;
-        memory[addr+1] = (uint8_t)(data >> 8);
-        memory[addr+2] = (uint8_t)(data >> 16);
-        memory[addr+3] = (uint8_t)(data >> 24);
-    }
-}
-
 
 
 
@@ -113,17 +62,7 @@ extern "C" int pmem_read_(uint32_t raddr, bool ren){
 #ifdef CONFIG_TIMER
 	//有关时钟
 	if(raddr >= RTC_ADDR && raddr <= RTC_ADDR + 7){
-		//printf("%x\n",raddr);
-		difftest_to_skip = true;
-		if(raddr == RTC_ADDR){
-			timer_addr[0] = (uint32_t)get_time();
-			return timer_addr[0];
-		}
-		else if(raddr == RTC_ADDR + 4){
-			timer_addr[1] = (uint32_t)(get_time() >> 32);
-			return timer_addr[1];
-		}
-		return 0;
+		return fetch_timer_addr();
 	}
 #endif
 
@@ -152,9 +91,7 @@ extern "C" void pmem_write_(uint32_t waddr, int wdata, char wmask){
 #ifdef CONFIG_SERIAL
 	//写串口
 	if(waddr >= SERIAL_PORT && waddr <= SERIAL_PORT + 7){
-		assert(wmask == 0b00000001);
-		serial_port[0] = (uint8_t)wdata;
-		putc((uint8_t)wdata, stderr);
+		update_serial_addr(waddr, wdata, wmask);
 		return;
 	}
 #endif
