@@ -15,7 +15,11 @@ CFLAGS += -I$(NPC_HOME)/wavesim_file
 LIB += /lib/x86_64-linux-gnu/libreadline.so\
 	   /lib/x86_64-linux-gnu/libSDL2.so
 
-SRCS += $(shell find -r $(WAVESIM_FILE) -type f -name "*.cpp")
+SRCS += $(shell find $(WAVESIM_FILE)/memory -type f -name "*.cpp")\
+		$(shell find $(WAVESIM_FILE)/register -type f -name "*.cpp")\
+		$(shell find $(WAVESIM_FILE)/memory -type f -name "*.cpp")\
+		$(shell find $(WAVESIM_FILE)/sdb -type f -name "*.cpp")\
+		$(shell find $(WAVESIM_FILE)/difftest -type f -name "*.cpp")
 
 
 DIFFTEST_FILE = $(WAVESIM_FILE)/difftest/difftest.cpp
