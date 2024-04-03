@@ -50,7 +50,6 @@ void init_difftest(const char* ref_so_file, long img_size, int port){
 		npc_cpu.gpr[i] = top -> regs[i];
 	npc_cpu.pc = top -> pc;
 
-	printf("test0\n");
 	difftest_regcpy(&npc_cpu, NPC_TO_NEMU);
 
 }

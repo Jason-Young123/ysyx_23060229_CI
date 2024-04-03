@@ -55,22 +55,22 @@ int main(int argc, char *argv[]){
 
 #ifdef CONFIG_DIFFTEST
 	printf("\033[36mDifftest is ON\033[0m\n");
-	init_difftest(ref_so_file, size, 0);
 	printf("\033[36mPath of reference file:\n%s\033[0m\n",ref_so_file);
 #else
 	printf("\033[36mDifftest is OFF\033[0m\n");
 #endif
 
 
-    // simulation start
-    cout << "simulation started" << endl;
-
 
 	init_engine(top, m_trace, &sim_time);
+#ifdef CONFIG_DIFFTEST
+	init_difftest(ref_so_file, size, 0);//如果开启difftest这条指令必须在init_engine后执行
+#endif
 	is_simulating = true;
 	init_sdb();
 	
 
+	//循环主体
 	sdb_mainloop(&sim_time);
 
 	m_trace -> close();
@@ -78,9 +78,8 @@ int main(int argc, char *argv[]){
 	if(top)
 		delete top;
 	if(m_trace)
-		delete m_trace;
-	
-    cout << "simulation completed" << endl;
+		delete m_trace;	
+
 
     return 0;
 }
