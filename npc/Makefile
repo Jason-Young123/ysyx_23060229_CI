@@ -11,6 +11,13 @@ VERILATOR_CFLAGS += -MMD --build -cc -O3 --x-assign fast \
 					--x-initial fast --noassert
 
 
+CFLAGS += -I$(NPC_HOME)/wavesim_file
+LIB += /lib/x86_64-linux-gnu/libreadline.so\
+	   /lib/x86_64-linux-gnu/libSDL2.so
+
+SRCS += $(shell find -r $(WAVESIM_FILE) -type f -name "*.cpp")
+
+
 DIFFTEST_FILE = $(WAVESIM_FILE)/difftest/difftest.cpp
 SDB_FILE = $(WAVESIM_FILE)/sdb/sdb.cpp
 EXPR_FILE = $(WAVESIM_FILE)/sdb/expr.cpp
@@ -63,6 +70,7 @@ boardclean:
 
 wavesim:
 	$(call git_commit, "wavesim in npc")
+	echo $(SRCS)
 	verilator -Wall --trace -cc $(VFILE)/$(TOP_MODULE).v --exe $(WAVESIM_FILE)/wavesim.cpp $(SDB_FILE) $(EXPR_FILE)\
 		$(WP_FILE)  $(ENGINE_FILE)	$(MEMORY_FILE)  $(REGISTER_FILE)  $(DIFFTEST_FILE) $(TIMER_FILE)  $(GPU_FILE)\
 		-D /lib/x86_64-linux-gnu/libreadline.so  /lib/x86_64-linux-gnu/libSDL2.so  -I$(VFILE) $(TIMING)
