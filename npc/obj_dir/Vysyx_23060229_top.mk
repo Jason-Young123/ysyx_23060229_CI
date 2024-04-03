@@ -44,6 +44,7 @@ VM_USER_LDLIBS = \
 # User .cpp files (from .cpp's on Verilator command line)
 VM_USER_CLASSES = \
 	difftest \
+	engine \
 	gpu \
 	memory \
 	timer \
@@ -57,6 +58,7 @@ VM_USER_CLASSES = \
 VM_USER_DIR = \
 	/home/jason/Desktop/ysyx-workbench/npc/wavesim_file \
 	/home/jason/Desktop/ysyx-workbench/npc/wavesim_file/difftest \
+	/home/jason/Desktop/ysyx-workbench/npc/wavesim_file/engine \
 	/home/jason/Desktop/ysyx-workbench/npc/wavesim_file/memory \
 	/home/jason/Desktop/ysyx-workbench/npc/wavesim_file/register \
 	/home/jason/Desktop/ysyx-workbench/npc/wavesim_file/sdb \
@@ -72,6 +74,8 @@ include $(VERILATOR_ROOT)/include/verilated.mk
 VPATH += $(VM_USER_DIR)
 
 difftest.o: /home/jason/Desktop/ysyx-workbench/npc/wavesim_file/difftest/difftest.cpp
+	$(OBJCACHE) $(CXX) $(CXXFLAGS) $(CPPFLAGS) $(OPT_FAST) -c -o $@ $<
+engine.o: /home/jason/Desktop/ysyx-workbench/npc/wavesim_file/engine/engine.cpp
 	$(OBJCACHE) $(CXX) $(CXXFLAGS) $(CPPFLAGS) $(OPT_FAST) -c -o $@ $<
 gpu.o: /home/jason/Desktop/ysyx-workbench/npc/wavesim_file/memory/gpu.cpp
 	$(OBJCACHE) $(CXX) $(CXXFLAGS) $(CPPFLAGS) $(OPT_FAST) -c -o $@ $<

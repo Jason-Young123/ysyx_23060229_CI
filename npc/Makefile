@@ -23,17 +23,6 @@ SRCS += $(shell find $(WAVESIM_FILE)/memory -type f -name "*.cpp")\
 		$(WAVESIM_FILE)/wavesim.cpp
 
 
-DIFFTEST_FILE = $(WAVESIM_FILE)/difftest/difftest.cpp
-SDB_FILE = $(WAVESIM_FILE)/sdb/sdb.cpp
-EXPR_FILE = $(WAVESIM_FILE)/sdb/expr.cpp
-WP_FILE = $(WAVESIM_FILE)/sdb/watchpoint.cpp
-ENGINE_FILE = $(WAVESIM_FILE)/engine/engine.cpp
-MEMORY_FILE = $(WAVESIM_FILE)/memory/memory.cpp
-REGISTER_FILE = $(WAVESIM_FILE)/register/register.cpp
-
-TIMER_FILE = $(WAVESIM_FILE)/memory/timer.cpp
-GPU_FILE = $(WAVESIM_FILE)/memory/gpu.cpp
-
 
 BIN ?= ./bin/dummy-riscv32e-npc.bin
 ISWAVE = 0
@@ -76,7 +65,7 @@ boardclean:
 wavesim:
 	$(call git_commit, "wavesim in npc")
 	verilator -Wall --trace -cc $(VFILE)/$(TOP_MODULE).v --exe $(SRCS)\
-		-D $(LIBS)  -I$(VFILE) $(TIMING)
+		$(CFLAGS)	-D $(LIBS)  -I$(VFILE) $(TIMING)
 	make -C obj_dir -f V$(TOP_MODULE).mk V$(TOP_MODULE)
 	@cp obj_dir/V$(TOP_MODULE) $(WAVESIM_FILE)/$(TOP_MODULE)_wave
 
