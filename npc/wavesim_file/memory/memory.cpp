@@ -198,5 +198,24 @@ void init_devices(){
 void update_devices(){
 	update_vga_screen();
 
+	SDL_Event event;
+  	while (SDL_PollEvent(&event)) {
+    	//fflush(stdout);
+    	//printf("something happened, %x\n", event.type);
+    	switch (event.type) {
+      		case SDL_QUIT: break;//{nemu_state.state = NEMU_QUIT; break;}
+      		// If a key was pressed
+      		case SDL_KEYDOWN: break;//{printf("keydown\n");}
+      		case SDL_KEYUP: break;
+        	//printf("keyevent\n");
+        	//uint8_t k = event.key.keysym.scancode;
+        	//if(k != 0)
+        	//printf("the scancode is: %d\n",k);
+        	//bool is_keydown = (event.key.type == SDL_KEYDOWN);
+        	//send_key(k, is_keydown);
+      		default: break;
+   		}
+  	}
+
 }
 
