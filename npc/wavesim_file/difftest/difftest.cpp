@@ -69,6 +69,7 @@ void difftest_step(){
 	}
 
 	else{
+		printf("test1\n");
 		struct npc_context_t tmp;
 		difftest_exec(1);
 		difftest_regcpy(&tmp, NEMU_TO_NPC);
