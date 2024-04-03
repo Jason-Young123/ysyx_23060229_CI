@@ -110,6 +110,7 @@ extern "C" int pmem_read_(uint32_t raddr, bool ren){
 	if(!ren)
 		return 0;
 
+#ifdef CONFIG_TIMER
 	//有关时钟
 	if(raddr >= RTC_ADDR && raddr <= RTC_ADDR + 7){
 		//printf("%x\n",raddr);
@@ -124,6 +125,7 @@ extern "C" int pmem_read_(uint32_t raddr, bool ren){
 		}
 		return 0;
 	}
+#endif
 
 	difftest_to_skip = false;
 
@@ -147,13 +149,15 @@ extern "C" int pmem_read_(uint32_t raddr, bool ren){
 
 
 extern "C" void pmem_write_(uint32_t waddr, int wdata, char wmask){
-    //写串口
+#ifdef CONFIG_SERIAL
+	//写串口
 	if(waddr >= SERIAL_PORT && waddr <= SERIAL_PORT + 7){
 		assert(wmask == 0b00000001);
 		serial_port[0] = (uint8_t)wdata;
 		putc((uint8_t)wdata, stderr);
 		return;
 	}
+#endif
 
 #ifdef CONIFG_GPU
 	//写VGA控制寄存器
@@ -192,13 +196,24 @@ extern "C" void pmem_write_(uint32_t waddr, int wdata, char wmask){
 
 
 void init_devices(){
+#ifdef CONFIG_SERIAL
+	printf("\033[36mSerial is ON\033[0m\n");
+#else
+	printf("\033[36mSerial is OFF\033[0m\n");
+#endif
+
+#ifdef CONFIG_TIMER
+    printf("\033[36mTimer is ON\033[0m\n");
+#else
+    printf("\033[36mTimer is OFF\033[0m\n");
+#endif
+
 #ifdef CONFIG_GPU
 	init_vga();
 	printf("\033[36mGPU is ON\033[0m\n");
 #else
 	printf("\033[36mGPU is OFF\033[0m\n");
 #endif
-
 }
 
 
