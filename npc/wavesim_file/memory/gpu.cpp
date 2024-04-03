@@ -22,7 +22,7 @@ static void init_screen() {
   	SDL_CreateWindowAndRenderer(SCREEN_W * 2,SCREEN_H * 2, 0, &window, &renderer);
   	SDL_SetWindowTitle(window, title);
   	texture = SDL_CreateTexture(renderer, SDL_PIXELFORMAT_ARGB8888,
-      		SDL_TEXTUREACCESS_STREAMING, SCREEN_W, SCREEN_H);
+      		SDL_TEXTUREACCESS_TARGET, SCREEN_W, SCREEN_H);
   	SDL_RenderPresent(renderer);
 }
 
