@@ -96,7 +96,7 @@ extern "C" void pmem_write_(uint32_t waddr, int wdata, char wmask){
 	}
 #endif
 
-#ifdef CONIFG_GPU
+#ifdef CONFIG_GPU
 	//写VGA控制寄存器
 	if(waddr >= VGACTL_ADDR && waddr <= VGACTL_ADDR + 7){
 		update_vgactl_addr(waddr, wdata, wmask);
