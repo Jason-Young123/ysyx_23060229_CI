@@ -5,7 +5,7 @@
 #include <verilated_vcd_c.h>
 #include "Vysyx_23060229_top.h"
 //#include "./register/register.h"
-#include "./memory/memory.h"
+#include <memory/memory.h>
 #include "./engine/engine.h"
 #include "./sdb/sdb.h"
 #include "./difftest/difftest.h"
