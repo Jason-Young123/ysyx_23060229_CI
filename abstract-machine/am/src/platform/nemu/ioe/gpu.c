@@ -25,10 +25,10 @@ void __am_gpu_config(AM_GPU_CONFIG_T *cfg) {
 //其中x，y是画方块的起始位置（左上角坐标），pixel为方块的颜色，w和h为方块的尺寸，sync
 //表示这个方块是否要被立刻显示
 void __am_gpu_fbdraw(AM_GPU_FBDRAW_T *ctl) {
-  	uint32_t* color_buf = (uint32_t*)ctl -> pixels;
+  	uint32_t** color_buf = (uint32_t**)ctl -> pixels;
 	for(int y = 0; y < ctl -> h; y++){
 		for(int x = 0; x < ctl -> w; x++){
-			outl(FB_ADDR + 4*((y + ctl -> y)*SCREEN_W + (x + ctl -> x)), color_buf[0]);
+			outl(FB_ADDR + 4*((y + ctl -> y)*SCREEN_W + (x + ctl -> x)), color_buf[y][x]);
 			//outl(FB_ADDR + y * 400 + x, 0x00ff0000);
 		}
 	}
