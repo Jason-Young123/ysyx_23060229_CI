@@ -1,5 +1,5 @@
 #include <sys/time.h>
-#include "memory.h"
+#include <memory/memory.h>
 
 
 uint32_t timer_addr[2] = {0, 0};
