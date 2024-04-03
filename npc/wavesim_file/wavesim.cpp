@@ -54,9 +54,9 @@ int main(int argc, char *argv[]){
 #endif
 
 #ifdef CONFIG_DIFFTEST
-	printf("\033[36mDifftest is ON\n");
+	printf("\033[36mDifftest is ON\033[0m\n");
 	init_difftest(ref_so_file, size, 0);
-	printf("Path of reference file:\n%s\033[0m\n",ref_so_file);
+	printf("\033[36mPath of reference file:\n%s\033[0m\n",ref_so_file);
 #else
 	printf("\033[36mDifftest is OFF\033[0m\n");
 #endif
