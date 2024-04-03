@@ -5,6 +5,7 @@
 #include <stdint.h>
 #include <cassert>
 #include <SDL2/SDL.h>
+#include <include/auto.h>
 
 #define MEM_SIZE  0xfffffff
 
