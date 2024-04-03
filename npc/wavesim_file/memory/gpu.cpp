@@ -15,7 +15,6 @@ static SDL_Texture *texture = NULL;
 
 
 static void init_screen() {
-	printf("to init\n");
   	SDL_Window *window = NULL;
   	char title[128];
   	
@@ -25,7 +24,6 @@ static void init_screen() {
   	texture = SDL_CreateTexture(renderer, SDL_PIXELFORMAT_ARGB8888,
       		SDL_TEXTUREACCESS_STATIC, SCREEN_W, SCREEN_H);
   	SDL_RenderPresent(renderer);
-	printf("init done\n");
 }
 
 
