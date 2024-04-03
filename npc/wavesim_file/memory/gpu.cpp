@@ -39,8 +39,8 @@ static inline void update_screen() {
 
 
 void update_vga_screen() {
-	SDL_Event event;
-	SDL_PollEvent(&event);
+	//SDL_Event event;
+	//SDL_PollEvent(&event);
 	//while(SDL_PollEvent(&event));
     if(vgactl_port_base[1] == 1){
         update_screen();
