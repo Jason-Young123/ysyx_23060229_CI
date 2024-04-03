@@ -30,7 +30,7 @@ VerilatedVcdC* m_trace = new VerilatedVcdC;
 
 int main(int argc, char *argv[]){
 	long size = init_mem(argv[1]);
-	init_vga();
+	init_devices();
     //srand((int)time(0));// to generate random numbers
     //Vysyx_23060229_top* top = new Vysyx_23060229_top;
 

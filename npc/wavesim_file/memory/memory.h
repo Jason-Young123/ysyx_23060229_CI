@@ -29,6 +29,8 @@ void pmem_write(uint32_t addr, uint8_t byte, uint32_t data);
 extern "C" int pmem_read_(uint32_t raddr, bool ren);
 extern "C" void pmem_write_(uint32_t waddr, int wdata, char wmask);
 
+
+void init_devices();
 void update_devices();
 
 
