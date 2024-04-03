@@ -45,7 +45,7 @@ void update_vga_screen() {
         vgactl_port_base[1] = 0;
     }
 	else{
-		SDL_RenderPresent(renderer);
+		//SDL_RenderPresent(renderer);
 	}
 	//update_screen();
 }
