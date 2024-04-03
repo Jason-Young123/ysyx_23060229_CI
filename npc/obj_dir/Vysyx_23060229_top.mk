@@ -35,6 +35,7 @@ VM_PREFIX = Vysyx_23060229_top
 VM_MODPREFIX = Vysyx_23060229_top
 # User CFLAGS (from -CFLAGS on Verilator command line)
 VM_USER_CFLAGS = \
+	-I/home/jason/Desktop/ysyx-workbench/npc/wavesim_file \
 
 # User LDLIBS (from -LDFLAGS on Verilator command line)
 VM_USER_LDLIBS = \

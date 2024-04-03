@@ -11,7 +11,9 @@ VERILATOR_CFLAGS += -MMD --build -cc -O3 --x-assign fast \
 					--x-initial fast --noassert
 
 
+
 CFLAGS += -I$(NPC_HOME)/wavesim_file
+LDFLAGS += -lSDL2 -lreadline
 LIBS += /lib/x86_64-linux-gnu/libreadline.so\
 	   /lib/x86_64-linux-gnu/libSDL2.so
 
@@ -65,7 +67,7 @@ boardclean:
 wavesim:
 	$(call git_commit, "wavesim in npc")
 	verilator -Wall --trace -cc $(VFILE)/$(TOP_MODULE).v --exe $(SRCS)\
-		-CFLAGS $(CFLAGS)	-D $(LIBS)  -I$(VFILE) $(TIMING)
+		-CFLAGS $(CFLAGS)	-LDFLAGS $(LDFLAGS)  -I$(VFILE) $(TIMING)
 	make -C obj_dir -f V$(TOP_MODULE).mk V$(TOP_MODULE)
 	@cp obj_dir/V$(TOP_MODULE) $(WAVESIM_FILE)/$(TOP_MODULE)_wave
 
