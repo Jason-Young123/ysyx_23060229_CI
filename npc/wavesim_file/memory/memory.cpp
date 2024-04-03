@@ -155,6 +155,7 @@ extern "C" void pmem_write_(uint32_t waddr, int wdata, char wmask){
 		return;
 	}
 
+#ifdef CONIFG_GPU
 	//写VGA控制寄存器
 	if(waddr >= VGACTL_ADDR && waddr <= VGACTL_ADDR + 7){
 		update_vgactl_addr(waddr, wdata, wmask);
@@ -166,6 +167,7 @@ extern "C" void pmem_write_(uint32_t waddr, int wdata, char wmask){
 		update_fb_addr(waddr, wdata, wmask);
 		return;
 	}
+#endif
 
 
 	//非法地址
@@ -190,8 +192,13 @@ extern "C" void pmem_write_(uint32_t waddr, int wdata, char wmask){
 
 
 void init_devices(){
+#ifdef CONFIG_GPU
 	init_vga();
 	printf("\033[36mGPU is ON\033[0m\n");
+#else
+	printf("\033[36mGPU is OFF\033[0m\n");
+#endif
+
 }
 
 
