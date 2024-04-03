@@ -29,17 +29,18 @@ static void init_screen() {
 
 
 static inline void update_screen() {
-  SDL_UpdateTexture(texture, NULL, (void *)vmem, SCREEN_W * sizeof(uint32_t));
-  SDL_RenderClear(renderer);
-  SDL_RenderCopy(renderer, texture, NULL, NULL);
-  SDL_RenderPresent(renderer);
-  //SDL_Delay(10);
+	printf("real update\n");
+	SDL_UpdateTexture(texture, NULL, (void *)vmem, SCREEN_W * sizeof(uint32_t));
+  	SDL_RenderClear(renderer);
+  	SDL_RenderCopy(renderer, texture, NULL, NULL);
+  	SDL_RenderPresent(renderer);
+  	//SDL_Delay(10);
 }
 
 
 
 void update_vga_screen() {
-	printf("update\n");
+	//printf("update\n");
     if(vgactl_port_base[1] == 1){
         update_screen();
         vgactl_port_base[1] = 0;
