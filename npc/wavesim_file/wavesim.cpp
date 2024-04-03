@@ -35,7 +35,7 @@ int main(int argc, char *argv[]){
 	init_devices();
 
 
-	printf("\nChecking Options:\n");
+	printf("Checking Options:\n");
 #ifdef CONFIG_WAVEREC
 	printf("\033[36mWave Record is ON\033[0m\n");
     // to enable wave tracing
