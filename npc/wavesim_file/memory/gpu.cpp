@@ -29,7 +29,6 @@ static void init_screen() {
 
 
 static inline void update_screen() {
-	printf("real update\n");
 	SDL_UpdateTexture(texture, NULL, (void *)vmem, SCREEN_W * sizeof(uint32_t));
   	SDL_RenderClear(renderer);
   	SDL_RenderCopy(renderer, texture, NULL, NULL);
@@ -45,6 +44,9 @@ void update_vga_screen() {
         update_screen();
         vgactl_port_base[1] = 0;
     }
+	else{
+		SDL_RenderPresent(renderer);
+	}
 	//update_screen();
 }
 

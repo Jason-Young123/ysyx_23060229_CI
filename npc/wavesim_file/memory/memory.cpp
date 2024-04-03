@@ -196,15 +196,8 @@ void init_devices(){
 
 
 void update_devices(){
-	//update_vga_screen();
+	update_vga_screen();
 
-
-	SDL_Event event;
-	if(SDL_PollEvent(&event)){
-		update_vga_screen();
-	}
-	else
-		update_vga_screen();
   	/*if (SDL_PollEvent(&event)) {
     	//fflush(stdout);
     	//printf("something happened, %x\n", event.type);
