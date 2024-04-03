@@ -8,7 +8,7 @@
 #include <verilated.h>
 #include <verilated_vcd_c.h>
 #include "Vysyx_23060229_top.h"
-#include "../include/auto.h"
+#include <include/auto.h>
 
 
 #define RESET_VECTOR 0x80000000

@@ -9,10 +9,9 @@
 #include <verilated_vcd_c.h>
 #include "Vysyx_23060229_top.h"
 
-#include "../engine/engine.h"
-#include "../register/register.h"
-#include "../memory/memory.h"
-//#include "../include/auto.h"
+#include <engine/engine.h>
+#include <register/register.h>
+#include <memory/memory.h>
 
 
 #define ARRLEN(arr) (int)(sizeof(arr) / sizeof(arr[0]))
