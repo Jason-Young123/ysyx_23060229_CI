@@ -16,13 +16,13 @@ extern "C" {
 
 
     // DPI IMPORTS
-    // DPI import at vfile/macro.v:11:31
+    // DPI import at /home/jason/Desktop/ysyx-workbench/npc/vfile/macro.v:11:31
     extern void hit_bad_trap();
-    // DPI import at vfile/macro.v:10:31
+    // DPI import at /home/jason/Desktop/ysyx-workbench/npc/vfile/macro.v:10:31
     extern void hit_good_trap();
-    // DPI import at vfile/macro.v:8:30
+    // DPI import at /home/jason/Desktop/ysyx-workbench/npc/vfile/macro.v:8:30
     extern int pmem_read_(int raddr, svBit ren);
-    // DPI import at vfile/macro.v:9:31
+    // DPI import at /home/jason/Desktop/ysyx-workbench/npc/vfile/macro.v:9:31
     extern void pmem_write_(int waddr, int wdata, char wmask);
 
 #ifdef __cplusplus

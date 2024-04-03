@@ -56,12 +56,12 @@ VM_USER_CLASSES = \
 
 # User .cpp directories (from .cpp's on Verilator command line)
 VM_USER_DIR = \
-	./wavesim_file \
-	./wavesim_file/difftest \
-	./wavesim_file/engine \
-	./wavesim_file/memory \
-	./wavesim_file/register \
-	./wavesim_file/sdb \
+	/home/jason/Desktop/ysyx-workbench/npc/wavesim_file \
+	/home/jason/Desktop/ysyx-workbench/npc/wavesim_file/difftest \
+	/home/jason/Desktop/ysyx-workbench/npc/wavesim_file/engine \
+	/home/jason/Desktop/ysyx-workbench/npc/wavesim_file/memory \
+	/home/jason/Desktop/ysyx-workbench/npc/wavesim_file/register \
+	/home/jason/Desktop/ysyx-workbench/npc/wavesim_file/sdb \
 
 
 ### Default rules...
@@ -73,25 +73,25 @@ include $(VERILATOR_ROOT)/include/verilated.mk
 ### Executable rules... (from --exe)
 VPATH += $(VM_USER_DIR)
 
-difftest.o: ./wavesim_file/difftest/difftest.cpp
+difftest.o: /home/jason/Desktop/ysyx-workbench/npc/wavesim_file/difftest/difftest.cpp
 	$(OBJCACHE) $(CXX) $(CXXFLAGS) $(CPPFLAGS) $(OPT_FAST) -c -o $@ $<
-engine.o: ./wavesim_file/engine/engine.cpp
+engine.o: /home/jason/Desktop/ysyx-workbench/npc/wavesim_file/engine/engine.cpp
 	$(OBJCACHE) $(CXX) $(CXXFLAGS) $(CPPFLAGS) $(OPT_FAST) -c -o $@ $<
-gpu.o: ./wavesim_file/memory/gpu.cpp
+gpu.o: /home/jason/Desktop/ysyx-workbench/npc/wavesim_file/memory/gpu.cpp
 	$(OBJCACHE) $(CXX) $(CXXFLAGS) $(CPPFLAGS) $(OPT_FAST) -c -o $@ $<
-memory.o: ./wavesim_file/memory/memory.cpp
+memory.o: /home/jason/Desktop/ysyx-workbench/npc/wavesim_file/memory/memory.cpp
 	$(OBJCACHE) $(CXX) $(CXXFLAGS) $(CPPFLAGS) $(OPT_FAST) -c -o $@ $<
-timer.o: ./wavesim_file/memory/timer.cpp
+timer.o: /home/jason/Desktop/ysyx-workbench/npc/wavesim_file/memory/timer.cpp
 	$(OBJCACHE) $(CXX) $(CXXFLAGS) $(CPPFLAGS) $(OPT_FAST) -c -o $@ $<
-register.o: ./wavesim_file/register/register.cpp
+register.o: /home/jason/Desktop/ysyx-workbench/npc/wavesim_file/register/register.cpp
 	$(OBJCACHE) $(CXX) $(CXXFLAGS) $(CPPFLAGS) $(OPT_FAST) -c -o $@ $<
-expr.o: ./wavesim_file/sdb/expr.cpp
+expr.o: /home/jason/Desktop/ysyx-workbench/npc/wavesim_file/sdb/expr.cpp
 	$(OBJCACHE) $(CXX) $(CXXFLAGS) $(CPPFLAGS) $(OPT_FAST) -c -o $@ $<
-sdb.o: ./wavesim_file/sdb/sdb.cpp
+sdb.o: /home/jason/Desktop/ysyx-workbench/npc/wavesim_file/sdb/sdb.cpp
 	$(OBJCACHE) $(CXX) $(CXXFLAGS) $(CPPFLAGS) $(OPT_FAST) -c -o $@ $<
-watchpoint.o: ./wavesim_file/sdb/watchpoint.cpp
+watchpoint.o: /home/jason/Desktop/ysyx-workbench/npc/wavesim_file/sdb/watchpoint.cpp
 	$(OBJCACHE) $(CXX) $(CXXFLAGS) $(CPPFLAGS) $(OPT_FAST) -c -o $@ $<
-wavesim.o: ./wavesim_file/wavesim.cpp
+wavesim.o: /home/jason/Desktop/ysyx-workbench/npc/wavesim_file/wavesim.cpp
 	$(OBJCACHE) $(CXX) $(CXXFLAGS) $(CPPFLAGS) $(OPT_FAST) -c -o $@ $<
 
 ### Link rules... (from --exe)
