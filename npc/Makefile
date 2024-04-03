@@ -1,4 +1,4 @@
-.PHONY: wave
+.PHONY: wavesim
 
 TOP_MODULE = ysyx_23060229_top
 
