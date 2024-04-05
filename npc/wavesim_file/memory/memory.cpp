@@ -67,6 +67,7 @@ extern "C" int pmem_read_(uint32_t raddr, bool ren){
 
 	//有关键盘
 	if(raddr >= KBD_ADDR && raddr <= KBD_ADDR + 3){
+		printf("keyboard\n");
 		SDL_Event event;
 		while(SDL_PollEvent(&event)){
         switch(event.type){
