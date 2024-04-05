@@ -83,7 +83,7 @@ int fetch_keyboard_addr(uint32_t raddr){
                 uint8_t k = event.key.keysym.scancode;
 				uint8_t kmap = keymap[k];
                 bool is_keydown = (event.key.type == SDL_KEYDOWN);
-                printf("is_keydown: %d\n",is_keydown);
+                //printf("is_keydown: %d\n",is_keydown);
                 ret = is_keydown ? (0x8000|kmap) : kmap;
 				//return is_keydown ? (0x8000|kmap) : kmap;
             }
