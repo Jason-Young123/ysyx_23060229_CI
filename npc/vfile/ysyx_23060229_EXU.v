@@ -46,7 +46,7 @@ module ysyx_23060229_EXU(
 				`ysyx_23060229_U_LUI:	begin reg_din = imm;		mem_wdata = 0;		pcout = pc + 4; end
 
 				//S-type
-				`ysyx_23060229_S_SB:    begin reg_din = 0;			mem_wdata = src2; 	pcout = pc + 4; end
+				`ysyx_23060229_S_SB:    begin reg_din = 0;			mem_wdata = src2; 		pcout = pc + 4; end
                 `ysyx_23060229_S_SH:    begin reg_din = 0;			mem_wdata = src2;		pcout = pc + 4; end
                 `ysyx_23060229_S_SW:    begin reg_din = 0;			mem_wdata = src2;		pcout = pc + 4; end
 

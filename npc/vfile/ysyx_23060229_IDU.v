@@ -238,7 +238,7 @@ module ysyx_23060229_IDU(
                 end
 
 				32'b???????_?????_?????_101_?????_0000011: begin
-                    reg_wen = 1; mem_ren = 1; mem_wen = 1; mem_wmask = 0;
+                    reg_wen = 1; mem_ren = 1; mem_wen = 0; mem_wmask = 0;
                     typ = `ysyx_23060229_I_LHU; imm = {{20{inst[31]}},inst[31:20]};
                     rs1 = inst[19:15]; rs2 = 0; rd = inst[11:7];
                 end
