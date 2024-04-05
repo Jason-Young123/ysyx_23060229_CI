@@ -74,6 +74,7 @@ void update_keycode(){
 
 int fetch_keyboard_addr(uint32_t raddr){
 	difftest_to_skip = true;
+	int ret = 0;
 	SDL_Event event;
 	while(SDL_PollEvent(&event)){
         switch(event.type){
@@ -83,10 +84,11 @@ int fetch_keyboard_addr(uint32_t raddr){
 				uint8_t kmap = keymap[k];
                 bool is_keydown = (event.key.type == SDL_KEYDOWN);
                 printf("is_keydown: %d\n",is_keydown);
-                return is_keydown ? (0x8000|kmap) : kmap;
+                ret = is_keydown ? (0x8000|kmap) : kmap;
+				//return is_keydown ? (0x8000|kmap) : kmap;
             }
             default: break;
 		}
 	}
-	return 0;
+	return ret;
 }
