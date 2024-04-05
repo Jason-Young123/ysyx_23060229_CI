@@ -161,7 +161,7 @@ void update_devices(){
 	update_vga_screen();
 #endif
 
-	//update_keycode();
+	update_keycode();
 
   	/*if (SDL_PollEvent(&event)) {
     	//fflush(stdout);
