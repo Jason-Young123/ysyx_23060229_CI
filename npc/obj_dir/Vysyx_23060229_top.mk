@@ -47,6 +47,7 @@ VM_USER_CLASSES = \
 	difftest \
 	engine \
 	gpu \
+	keyboard \
 	serial \
 	timer \
 	memory \
@@ -81,6 +82,8 @@ difftest.o: /home/jason/Desktop/ysyx-workbench/npc/wavesim_file/difftest/difftes
 engine.o: /home/jason/Desktop/ysyx-workbench/npc/wavesim_file/engine/engine.cpp
 	$(OBJCACHE) $(CXX) $(CXXFLAGS) $(CPPFLAGS) $(OPT_FAST) -c -o $@ $<
 gpu.o: /home/jason/Desktop/ysyx-workbench/npc/wavesim_file/memory/devices/gpu.cpp
+	$(OBJCACHE) $(CXX) $(CXXFLAGS) $(CPPFLAGS) $(OPT_FAST) -c -o $@ $<
+keyboard.o: /home/jason/Desktop/ysyx-workbench/npc/wavesim_file/memory/devices/keyboard.cpp
 	$(OBJCACHE) $(CXX) $(CXXFLAGS) $(CPPFLAGS) $(OPT_FAST) -c -o $@ $<
 serial.o: /home/jason/Desktop/ysyx-workbench/npc/wavesim_file/memory/devices/serial.cpp
 	$(OBJCACHE) $(CXX) $(CXXFLAGS) $(CPPFLAGS) $(OPT_FAST) -c -o $@ $<

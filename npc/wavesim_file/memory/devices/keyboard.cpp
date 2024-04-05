@@ -6,7 +6,7 @@ extern bool difftest_to_skip;
 uint32_t keyboard_addr[1] = {0};
 
 
-static update_keycode(){
+static void update_keycode(){
 	SDL_Event event;
 	while(SDL_PollEvent(&event)){
 		switch(event.type){
