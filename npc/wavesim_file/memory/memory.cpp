@@ -183,3 +183,10 @@ void update_devices(){
 
 }
 
+
+void sdl_clear_event_queue() {
+	SDL_Event event;
+	while (SDL_PollEvent(&event));
+}
+
+
