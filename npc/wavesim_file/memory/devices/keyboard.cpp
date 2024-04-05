@@ -14,6 +14,7 @@ void update_keycode(){
 			case SDL_KEYDOWN:{
 				uint8_t k = event.key.keysym.scancode;
 				bool is_keydown = (event.key.type == SDL_KEYDOWN);
+				printf("is_keydown: %d\n",is_keydown);
 				keyboard_addr[0] = is_keydown ? (0x8000|k) : k;
 				break;
 			}
