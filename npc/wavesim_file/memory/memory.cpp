@@ -155,6 +155,8 @@ void init_devices(){
 #else
 	printf("\033[36mGPU is OFF\033[0m\n");
 #endif
+
+	init_keymap();
 }
 
 
