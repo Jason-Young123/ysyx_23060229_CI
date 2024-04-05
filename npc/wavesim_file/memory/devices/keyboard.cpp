@@ -30,7 +30,9 @@ void update_keycode(){
 int fetch_keyboard_addr(uint32_t raddr){
     difftest_to_skip = true;
     if(raddr == KBD_ADDR){
-        return keyboard_addr[0];
+        int tmp = keyboard_addr[0];
+		keyboard_addr[0] = 0;
+		return tmp;
     }
     return 0;
 }
