@@ -64,10 +64,12 @@ extern "C" int pmem_read_(uint32_t raddr, bool ren){
 	}
 #endif
 
+#ifdef CONFIG_KEYBOARD
 	//有关键盘
 	if(raddr >= KBD_ADDR && raddr <= KBD_ADDR + 3){
 		return fetch_keyboard_addr(raddr);
 	}
+#endif
 
 
 	difftest_to_skip = false;
@@ -149,6 +151,13 @@ void init_devices(){
     printf("\033[36mTimer is OFF\033[0m\n");
 #endif
 
+#ifdef CONFIG_KEYBOARD
+	init_keymap();
+    printf("\033[36mKeyboard is ON\033[0m\n");
+#else
+    printf("\033[36mKeyboard is OFF\033[0m\n");
+#endif
+
 #ifdef CONFIG_GPU
 	init_vga();
 	printf("\033[36mGPU is ON\033[0m\n");
@@ -156,7 +165,6 @@ void init_devices(){
 	printf("\033[36mGPU is OFF\033[0m\n");
 #endif
 
-	init_keymap();
 }
 
 
