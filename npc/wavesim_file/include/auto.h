@@ -1,5 +1,4 @@
 #define CONFIG_DEVICES 1
 #define CONFIG_SERIAL 1
 #define CONFIG_TIMER 1
-#define CONFIG_GPU 1
 #define CONFIG_WP 1
