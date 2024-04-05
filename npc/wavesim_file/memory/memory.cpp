@@ -18,7 +18,6 @@ uint8_t memory[MEM_SIZE] = { 0x93,0x80,0x10,0x00,//addi,R(1) += 1, R(1) = 1
 extern bool difftest_to_skip;
 extern bool difftest_skipping;
 
-bool keyboard = false;
 
 
 long init_mem(const char* file){
@@ -67,24 +66,7 @@ extern "C" int pmem_read_(uint32_t raddr, bool ren){
 
 	//有关键盘
 	if(raddr >= KBD_ADDR && raddr <= KBD_ADDR + 3){
-		SDL_Event event;
-		while(SDL_PollEvent(&event)){
-        switch(event.type){
-            case SDL_KEYUP:
-            case SDL_KEYDOWN:{
-                uint8_t k = event.key.keysym.scancode;
-                bool is_keydown = (event.key.type == SDL_KEYDOWN);
-                printf("is_keydown: %d\n",is_keydown);
-                return is_keydown ? (0x8000|k) : k;
-				//keyboard_addr[0] = is_keydown ? (0x8000|k) : k;
-                break;
-            }
-            default: break;
-        }
-
-    	}
-		return 0;	
-		//return fetch_keyboard_addr(raddr);
+		return fetch_keyboard_addr(raddr);
 	}
 
 
