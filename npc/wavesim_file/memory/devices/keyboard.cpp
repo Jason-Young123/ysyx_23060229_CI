@@ -15,8 +15,12 @@ void update_keycode(){
 				uint8_t k = event.key.keysym.scancode;
 				bool is_keydown = (event.key.type == SDL_KEYDOWN);
 				keyboard_addr[0] = is_keydown ? (0x8000|k) : k;
+				break;
 			}
-			default: break;
+			default: {
+				keyboard_addr[0] = 0;
+				break;
+			}
 		}
 	
 	}
