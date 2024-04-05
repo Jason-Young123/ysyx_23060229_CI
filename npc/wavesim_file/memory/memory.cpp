@@ -81,9 +81,9 @@ extern "C" int pmem_read_(uint32_t raddr, bool ren){
             }
             default: break;
         }
-		return 0;
 
-    }	
+    	}
+		return 0;	
 		//return fetch_keyboard_addr(raddr);
 	}
 
