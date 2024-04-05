@@ -50,10 +50,6 @@ long init_mem(const char* file){
 
 
 
-
-
-
-
 extern "C" int pmem_read_(uint32_t raddr, bool ren){
 	//printf("in pmem_read_, %x\n",raddr);
 	if(!ren)
@@ -65,6 +61,12 @@ extern "C" int pmem_read_(uint32_t raddr, bool ren){
 		return fetch_timer_addr(raddr);
 	}
 #endif
+
+	//有关键盘
+	if(raddr >= KBD_ADDR && raddr <= KBD_ADDR + 3){
+		return fetch_keyboard_addr(raddr);
+	}
+
 
 	difftest_to_skip = false;
 
@@ -158,6 +160,8 @@ void update_devices(){
 #ifdef CONFIG_GPU
 	update_vga_screen();
 #endif
+
+	update_keycode();
 
   	/*if (SDL_PollEvent(&event)) {
     	//fflush(stdout);

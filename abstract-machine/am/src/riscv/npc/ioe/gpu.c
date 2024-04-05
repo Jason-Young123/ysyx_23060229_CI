@@ -25,7 +25,14 @@ void __am_gpu_config(AM_GPU_CONFIG_T *cfg) {
 //表示这个方块是否要被立刻显示
 void __am_gpu_fbdraw(AM_GPU_FBDRAW_T *ctl) {
     uint32_t* color_buf = (uint32_t*)ctl -> pixels;
-    for(int y = 0; y < ctl -> h; y++){
+	//uint8_t* color_buf = (uint8_t*)ctl->pixels;
+
+
+	/*for(int y = 0; y < ctl->h; y++){
+		out(FB_ADDR+4*(y+ctl->y)*SCREEN_W, color_buf+y*ctl->w, ctl->w);
+	}*/
+
+	for(int y = 0; y < ctl -> h; y++){
         for(int x = 0; x < ctl -> w; x++){
             outl(FB_ADDR + 4*((y + ctl -> y)*SCREEN_W + (x + ctl -> x)), color_buf[y*ctl->w+x]);
             //outl(FB_ADDR + y * 400 + x, 0x00ff0000);
