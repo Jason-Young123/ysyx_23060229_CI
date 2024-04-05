@@ -41,7 +41,11 @@ void update_serial_addr(uint32_t waddr, int wdata, char wmask);
 //timer
 int fetch_timer_addr(uint32_t raddr);
 
-//gpu
+//keyboard
+void update_keycode();
+int fetch_keyboard_addr(uint32_t raddr);
+
+		//gpu
 void init_vga();
 void update_vga_screen();
 void update_vgactl_addr(uint32_t waddr, int sync, char wmask);

@@ -6,7 +6,7 @@ extern bool difftest_to_skip;
 uint32_t keyboard_addr[1] = {0};
 
 
-static void update_keycode(){
+void update_keycode(){
 	SDL_Event event;
 	while(SDL_PollEvent(&event)){
 		switch(event.type){
@@ -23,7 +23,7 @@ static void update_keycode(){
 
 }
 
-int fetch_timer_addr(uint32_t raddr){
+int fetch_keyboard_addr(uint32_t raddr){
     difftest_to_skip = true;
     if(raddr == KBD_ADDR){
         return keyboard_addr[0];
