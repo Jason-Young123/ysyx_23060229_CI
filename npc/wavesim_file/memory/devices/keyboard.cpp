@@ -37,6 +37,7 @@ uint32_t keyboard_addr[1] = {0};
 
 
 void update_keycode(){
+	return;
 	SDL_Event event;
 	while(SDL_PollEvent(&event)){
 		switch(event.type){
