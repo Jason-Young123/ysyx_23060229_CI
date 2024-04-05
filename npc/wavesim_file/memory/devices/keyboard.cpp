@@ -19,7 +19,7 @@ void update_keycode(){
 				break;
 			}
 			default: {
-				keyboard_addr[0] = 0;
+				//keyboard_addr[0] = 0;
 				break;
 			}
 		}
