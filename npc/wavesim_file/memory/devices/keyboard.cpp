@@ -23,6 +23,12 @@ enum {
 #define SDL_KEYMAP(k) keymap[SDL_SCANCODE_ ## k] = NEMU_KEY_ ## k;
 static uint32_t keymap[256] = {};
 
+
+extern bool difftest_to_skip;
+
+uint32_t keyboard_addr[1] = {0};
+
+
 void init_keymap() {
   NEMU_KEYS(SDL_KEYMAP)
   //SDL_KEYMAP(ESCAPE) ->   keymap[SDL_SCANCODE_ESCAPE] = NEMU_KEY_ESCAPE
@@ -30,13 +36,7 @@ void init_keymap() {
 }
 
 
-
-extern bool difftest_to_skip;
-
-uint32_t keyboard_addr[1] = {0};
-
-
-void update_keycode(){
+/*void update_keycode(){
 	SDL_Event event;
 	SDL_PollEvent(&event);
 	return;
@@ -60,7 +60,7 @@ void update_keycode(){
 	
 	}
 
-}
+}*/
 
 /*int fetch_keyboard_addr(uint32_t raddr){
     difftest_to_skip = true;

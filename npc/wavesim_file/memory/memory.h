@@ -43,7 +43,6 @@ int fetch_timer_addr(uint32_t raddr);
 
 //keyboard
 void init_keymap();
-void update_keycode();
 int fetch_keyboard_addr(uint32_t raddr);
 
 
