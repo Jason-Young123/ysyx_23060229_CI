@@ -30,8 +30,12 @@ int atoi(const char* nptr) {
 }
 
 
-//extern Area heap;
-static size_t addr = 0x80090000;
+
+extern Area heap;
+extern char _heap_start;
+//static size_t addr = _heap_start;
+//static size_t addr = 0x80090000;
+
 
 
 void *malloc(size_t size) {
@@ -42,8 +46,14 @@ void *malloc(size_t size) {
   //   panic() -> putchar() -> (glibc) -> malloc() -> panic()
 #if !(defined(__ISA_NATIVE__) && defined(__NATIVE_USE_KLIB__))
   //panic("Not implemented");
-  addr += size;
-  return (void *)(addr - size);
+  	static size_t addr = (size_t)&_heap_start;
+  	addr += size;
+  	if(addr >= (size_t)heap.start && addr <= (size_t)heap.end)
+  		return (void *)(addr - size);
+	else{
+		printf("malloc failure\n");
+		return NULL;
+	}
   //return addr;
 #endif
   //printf("%#x\n",heap.start);
