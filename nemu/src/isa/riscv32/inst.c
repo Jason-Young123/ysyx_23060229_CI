@@ -19,12 +19,14 @@
 #include <cpu/decode.h>
 
 #define R(i) gpr(i)
+#define SR(i) sr(i)//newly added
 #define Mr vaddr_read
 #define Mw vaddr_write
 
 enum {
   TYPE_I, TYPE_U, TYPE_S, TYPE_J,
   TYPE_B, TYPE_R, TYPE_M, TYPE_N, // none
+  TYPE_I_CSR
 };
 
 
@@ -54,7 +56,8 @@ static void decode_operand(Decode *s, int *rd, word_t *src1, word_t *src2, word_
   *rd     = BITS(i, 11, 7);
   switch (type) {
     case TYPE_I: src1R(); *src2 = rs2; immI(); break;//*src2 = rs2 is only for slli,srli and srai
-    case TYPE_U:                   immU(); break;
+	case TYPE_I_CSR: src1R(); *src2 = rs1; immI(); break;
+	case TYPE_U:                   immU(); break;
     case TYPE_S: src1R(); src2R(); immS(); break;
 	case TYPE_B: src1R(); src2R(); immB(); break;
 	case TYPE_R: src1R(); src2R(); immR(); break;
@@ -141,6 +144,14 @@ static int decode_exec(Decode *s) {
   INSTPAT("0000000 ????? ????? 001 ????? 00100 11", slli   , I, R(rd) = src1 << src2);
   INSTPAT("0000000 ????? ????? 101 ????? 00100 11", srli   , I, R(rd) = src1 >> src2);
   INSTPAT("0100000 ????? ????? 101 ????? 00100 11", srai   , I, R(rd) = (int32_t)src1 >> src2);
+
+  //CSR
+  INSTPAT("??????? ????? ????? 001 ????? 11100 11", csrrw  , I, R(rd) = SR(imm); SR(imm) = src1);
+  INSTPAT("??????? ????? ????? 010 ????? 11100 11", csrrwi , I, R(rd) = SR(imm); SR(imm) = src2);
+  INSTPAT("??????? ????? ????? 011 ????? 11100 11", csrrs  , I, R(rd) = SR(imm); SR(imm) = src1 | SR(imm));
+  INSTPAT("??????? ????? ????? 101 ????? 11100 11", csrrsi , I, R(rd) = SR(imm); SR(imm) = src2 | SR(imm));
+  INSTPAT("??????? ????? ????? 110 ????? 11100 11", csrrc  , I, R(rd) = SR(imm); SR(imm) = src1 & SR(imm));
+  INSTPAT("??????? ????? ????? 111 ????? 11100 11", csrrci , I, R(rd) = SR(imm); SR(imm) = src2 & SR(imm));
 
 
   //jalr

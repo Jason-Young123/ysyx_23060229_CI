@@ -25,6 +25,10 @@ static inline int check_reg_idx(int idx) {
 
 #define gpr(idx) (cpu.gpr[check_reg_idx(idx)])
 
+
+extern uint32_t sregs[4096];
+#define sr(idx) sregs[idx] //newly added
+
 static inline const char* reg_name(int idx) {
   extern const char* regs[];
   return regs[check_reg_idx(idx)];
