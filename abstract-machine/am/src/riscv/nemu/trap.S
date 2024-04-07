@@ -58,6 +58,7 @@ __am_asm_trap:
   csrw mstatus, t1
 
   mv a0, sp
+  #__am_irq_handle定义于./cte.c
   jal __am_irq_handle
 
   LOAD t1, OFFSET_STATUS(sp)
