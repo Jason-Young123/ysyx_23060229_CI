@@ -329,7 +329,7 @@ module ysyx_23060229_IDU(
 				end
 
             endcase
-    end
+	end
 
 
 endmodule
