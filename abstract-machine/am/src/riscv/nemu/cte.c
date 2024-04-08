@@ -36,7 +36,7 @@ Context *kcontext(Area kstack, void (*entry)(void *), void *arg) {
 }
 
 void yield() {
-	printf("in yield\n");
+	//printf("in yield\n");
 #ifdef __riscv_e
 	//sr[epc] = isa_raise_intr(0, cpu.pc);
 	asm volatile("li a5, -1; ecall");
