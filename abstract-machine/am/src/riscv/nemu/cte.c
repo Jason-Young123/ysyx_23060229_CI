@@ -36,9 +36,9 @@ Context *kcontext(Area kstack, void (*entry)(void *), void *arg) {
 }
 
 void yield() {
+	printf("in yield\n");
 #ifdef __riscv_e
 	//sr[epc] = isa_raise_intr(0, cpu.pc);
-	printf("in yield\n");
 	asm volatile("li a5, -1; ecall");
   //直接跳转到mtvec，即__am_asm_trap处继续执行
 #else
