@@ -37,7 +37,10 @@ void int2xstr(char *out, int in, bool _x){
 
 	for(int j = 0; j < 8; ++j){
 		uint8_t tmp = (in >> (28 - 4 * j)) & 0x0000000f;
-		out[i++] = tmp + '0';
+		if(tmp <= 9)
+			out[i++] = tmp + '0';
+		else
+			out[i++] = tmp - 10 + 'a';
 	}
 	out[i] = '\0';
 }
