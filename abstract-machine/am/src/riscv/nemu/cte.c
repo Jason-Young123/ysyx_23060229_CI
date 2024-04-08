@@ -36,11 +36,15 @@ bool cte_init(Context*(*handler)(Event, Context*)) {
 }
 
 Context *kcontext(Area kstack, void (*entry)(void *), void *arg) {
-  return NULL;
+	//在栈底部创建一个上下文结构
+	Context* Cptr = (Context*)(kstack.end - sizeof(Context) );
+	Cptr -> pdir = (void *)entry;
+
+	return Cptr;
+	//return NULL;
 }
 
 void yield() {
-	//printf("in yield\n");
 #ifdef __riscv_e
 	//sr[epc] = isa_raise_intr(0, cpu.pc);
 	asm volatile("li a5, -1; ecall");
