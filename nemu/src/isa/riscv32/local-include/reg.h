@@ -25,6 +25,10 @@ static inline int check_reg_idx(int idx) {
 
 #define gpr(idx) (cpu.gpr[check_reg_idx(idx)])
 
+#define MSTATUS 0x300
+#define MTVEC 	0x305
+#define MEPC 	0x341
+#define MCAUSE	0x342
 
 extern uint32_t sregs[4096];
 #define sr(idx) sregs[idx] //newly added

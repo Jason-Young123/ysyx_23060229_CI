@@ -22,6 +22,7 @@ extern void __am_asm_trap(void);
 
 bool cte_init(Context*(*handler)(Event, Context*)) {
   // initialize exception entry
+  // 把__am_asm_trap作为异常处理入口
   asm volatile("csrw mtvec, %0" : : "r"(__am_asm_trap));
 
   // register event handler
@@ -36,7 +37,9 @@ Context *kcontext(Area kstack, void (*entry)(void *), void *arg) {
 
 void yield() {
 #ifdef __riscv_e
-  asm volatile("li a5, -1; ecall");
+	//sr[epc] = isa_raise_intr(0, cpu.pc);
+	asm volatile("li a5, -1; ecall");
+  //直接跳转到mtvec，即__am_asm_trap处继续执行
 #else
   asm volatile("li a7, -1; ecall");
 #endif
