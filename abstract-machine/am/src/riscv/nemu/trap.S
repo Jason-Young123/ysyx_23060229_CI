@@ -57,12 +57,21 @@ __am_asm_trap:
   or t1, t1, a0
   csrw mstatus, t1
 
+  #将伪栈顶指针存入a0,即传入函数
   mv a0, sp
   #__am_irq_handle定义于./cte.c
   jal __am_irq_handle
 
+  #这边需要切换伪栈顶指针
+  mv sp, a0
+  #addi sp, sp, -CONTEXT_SIZE
+
   LOAD t1, OFFSET_STATUS(sp)
   LOAD t2, OFFSET_EPC(sp)
+  
+  #将保存的pc指针加4,写入MEPC
+  #addi t2, t2, 4
+
   csrw mstatus, t1
   csrw mepc, t2
 

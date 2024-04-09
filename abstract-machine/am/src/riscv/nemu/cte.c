@@ -7,9 +7,9 @@ static Context* (*user_handler)(Event, Context*) = NULL;
 Context* __am_irq_handle(Context *c) {
   if (user_handler) {
     Event ev = {0};
-	printf("mepc: %x\n", c->mepc);
-	printf("mcause: %x\n", c->mcause);
-	printf("mstatus: %x\n", c-> mstatus);
+	//printf("mepc: %x\n", c->mepc);
+	//printf("mcause: %x\n", c->mcause);
+	//printf("mstatus: %x\n", c-> mstatus);
     switch (c->mcause) {
 		case 0xb: ev.event = EVENT_YIELD; break;
       	default: ev.event = EVENT_ERROR; break;
@@ -17,6 +17,7 @@ Context* __am_irq_handle(Context *c) {
 
     c = user_handler(ev, c);
     assert(c != NULL);
+	c->mepc += 4;
   }
 
   return c;
@@ -37,8 +38,11 @@ bool cte_init(Context*(*handler)(Event, Context*)) {
 
 Context *kcontext(Area kstack, void (*entry)(void *), void *arg) {
 	//在栈底部创建一个上下文结构
-	Context* Cptr = (Context*)(kstack.end - sizeof(Context) );
-	Cptr -> pdir = (void *)entry;
+	Context* Cptr = (Context*)( kstack.end - sizeof(Context) );
+	Cptr -> mepc = (uintptr_t)entry;
+	
+	//Cptr -> mstatus = entry;
+	//Cptr -> pdir = arg;
 
 	return Cptr;
 	//return NULL;
