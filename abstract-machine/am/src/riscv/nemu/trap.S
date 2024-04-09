@@ -57,7 +57,7 @@ __am_asm_trap:
   or t1, t1, a0
   csrw mstatus, t1
 
-  #将伪栈顶指针存入a0,即传入函数
+  #将伪栈底指针存入a0,即传入函数
   mv a0, sp
   #__am_irq_handle定义于./cte.c
   jal __am_irq_handle
