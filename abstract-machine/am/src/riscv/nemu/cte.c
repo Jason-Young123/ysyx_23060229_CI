@@ -17,7 +17,7 @@ Context* __am_irq_handle(Context *c) {
 
     c = user_handler(ev, c);
     assert(c != NULL);
-	c->mepc += 4;
+	c->mepc += 4;//软件实现mepc自增4
   }
 
   return c;
@@ -37,7 +37,7 @@ bool cte_init(Context*(*handler)(Event, Context*)) {
 }
 
 Context *kcontext(Area kstack, void (*entry)(void *), void *arg) {
-	//在栈底部创建一个上下文结构
+	//在栈顶部创建一个上下文结构
 	Context* Cptr = (Context*)( kstack.end - sizeof(Context) );
 	Cptr -> mepc = (uintptr_t)entry;
 	
@@ -50,7 +50,6 @@ Context *kcontext(Area kstack, void (*entry)(void *), void *arg) {
 
 void yield() {
 #ifdef __riscv_e
-	//sr[epc] = isa_raise_intr(0, cpu.pc);
 	asm volatile("li a5, -1; ecall");
   //直接跳转到mtvec，即__am_asm_trap处继续执行
 #else
