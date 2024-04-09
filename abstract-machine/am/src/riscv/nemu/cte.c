@@ -36,17 +36,18 @@ bool cte_init(Context*(*handler)(Event, Context*)) {
   return true;
 }
 
+
+
 Context *kcontext(Area kstack, void (*entry)(void *), void *arg) {
 	//在栈顶部创建一个上下文结构
 	Context* Cptr = (Context*)( kstack.end - sizeof(Context) );
 	Cptr -> mepc = (uintptr_t)entry;
-	
-	//Cptr -> mstatus = entry;
-	//Cptr -> pdir = arg;
+	Cptr -> gpr[10] = (uintptr_t)arg;
 
 	return Cptr;
-	//return NULL;
 }
+
+
 
 void yield() {
 #ifdef __riscv_e
