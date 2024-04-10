@@ -15,9 +15,10 @@ Context* __am_irq_handle(Context *c) {
       	default: ev.event = EVENT_ERROR; break;
     }
 
+	c->mepc += 4;
     c = user_handler(ev, c);
     assert(c != NULL);
-	c->mepc += 4;//软件实现mepc自增4
+	//c->mepc += 4;//软件实现mepc自增4
   }
 
   return c;
