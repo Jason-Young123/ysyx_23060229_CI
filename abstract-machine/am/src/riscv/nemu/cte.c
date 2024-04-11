@@ -4,6 +4,7 @@
 
 static Context* (*user_handler)(Event, Context*) = NULL;
 
+
 Context* __am_irq_handle(Context *c) {
   if (user_handler) {
     Event ev = {0};
@@ -14,7 +15,7 @@ Context* __am_irq_handle(Context *c) {
 		case 0xb: ev.event = EVENT_YIELD; break;
       	default: ev.event = EVENT_ERROR; break;
     }
-
+;
 	c->mepc += 4;
     c = user_handler(ev, c);
     assert(c != NULL);
@@ -45,6 +46,8 @@ Context *kcontext(Area kstack, void (*entry)(void *), void *arg) {
 	Context* Cptr = (Context*)( kstack.end - sizeof(Context) + 4 );
 	Cptr -> mepc = (uintptr_t)entry;
 	Cptr -> gpr[10] = (uintptr_t)arg;
+	//Cptr -> gpr[11] = (uintptr_t)(arg + 1);
+	//Cptr -> gpr[12] = (uintptr_t)(arg + 2);
 
 	return Cptr;
 }

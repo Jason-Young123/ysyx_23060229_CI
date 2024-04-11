@@ -75,16 +75,24 @@
 	`define ysyx_23060229_I_SRLI 	6'b101010
 	`define ysyx_23060229_I_SRAI    6'b101011
 	
-	`define ysyx_23060229_I_JALR    6'b101100
+	`define ysyx_23060229_I_CSRRW	6'b101100
+	`define ysyx_23060229_I_CSRRWI	6'b101101
+	`define ysyx_23060229_I_CSRRS	6'b101110
+	`define ysyx_23060229_I_CSRRSI	6'b101111
+	`define ysyx_23060229_I_CSRRC	6'b110000
+	`define ysyx_23060229_I_CSRRCI	6'b110001
+	
+	`define ysyx_23060229_I_JALR    6'b110010
 
 
-
-	`define ysyx_23060229_J_JAL     6'b101101
-
+	`define ysyx_23060229_J_JAL     6'b110011
 
 
-	`define ysyx_23060229_EBREAK    6'b101110
-	`define ysyx_23060229_NONE		6'b101111
+	`define ysyx_23060229_ECALL		6'b110100
+	`define ysyx_23060229_MRET		6'b110101
+	
+	`define ysyx_23060229_EBREAK    6'b110110
+	`define ysyx_23060229_NONE		6'b110111
 
 
 `endif
