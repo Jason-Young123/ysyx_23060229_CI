@@ -24,9 +24,12 @@ class Vysyx_23060229_top___024root final : public VerilatedModule {
     CData/*4:0*/ ysyx_23060229_top__DOT__rs2;
     CData/*4:0*/ ysyx_23060229_top__DOT__rd;
     CData/*0:0*/ ysyx_23060229_top__DOT__reg_wen;
+    CData/*1:0*/ ysyx_23060229_top__DOT__csreg_wen;
     CData/*0:0*/ ysyx_23060229_top__DOT__mem_ren;
     CData/*0:0*/ ysyx_23060229_top__DOT__mem_wen;
     CData/*7:0*/ ysyx_23060229_top__DOT__mem_wmask;
+    CData/*0:0*/ ysyx_23060229_top__DOT__muexu__DOT__myscomp__DOT____VdfgTmp_h523b4e61__0;
+    CData/*0:0*/ ysyx_23060229_top__DOT__muexu__DOT__myscomp1__DOT____VdfgTmp_h523b4e61__0;
     CData/*0:0*/ __Vtrigrprev__TOP__clk;
     CData/*0:0*/ __VactContinue;
     VL_OUT(inst,31,0);
@@ -35,11 +38,12 @@ class Vysyx_23060229_top___024root final : public VerilatedModule {
     IData/*31:0*/ ysyx_23060229_top__DOT__reg_din;
     IData/*31:0*/ ysyx_23060229_top__DOT__src1;
     IData/*31:0*/ ysyx_23060229_top__DOT__src2;
+    IData/*31:0*/ ysyx_23060229_top__DOT__csreg_din;
+    IData/*31:0*/ ysyx_23060229_top__DOT__csreg_dout;
     IData/*31:0*/ ysyx_23060229_top__DOT__mem_wdata;
     IData/*31:0*/ ysyx_23060229_top__DOT__mem_rdata;
     IData/*31:0*/ ysyx_23060229_top__DOT__pc_tmp;
-    IData/*31:0*/ ysyx_23060229_top__DOT__muexu__DOT__myscomp__DOT__sub;
-    IData/*31:0*/ ysyx_23060229_top__DOT__muexu__DOT__myscomp1__DOT__sub;
+    IData/*31:0*/ ysyx_23060229_top__DOT__muexu__DOT__scomp_out;
     IData/*31:0*/ __Vfunc_pmem_read___0__Vfuncout;
     IData/*31:0*/ __Vfunc_pmem_read___1__Vfuncout;
     IData/*31:0*/ __VstlIterCount;
@@ -47,7 +51,7 @@ class Vysyx_23060229_top___024root final : public VerilatedModule {
     IData/*31:0*/ __VactIterCount;
     VL_OUT(regs[32],31,0);
     VlUnpacked<IData/*31:0*/, 32> ysyx_23060229_top__DOT____Vcellout__myreg____pinNumber12;
-    VlUnpacked<CData/*0:0*/, 2> __Vm_traceActivity;
+    VlUnpacked<IData/*31:0*/, 4096> ysyx_23060229_top__DOT__mycsreg__DOT__CSReg;
     VlTriggerVec<1> __VstlTriggered;
     VlTriggerVec<1> __VicoTriggered;
     VlTriggerVec<1> __VactTriggered;

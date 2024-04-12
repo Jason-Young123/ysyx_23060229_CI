@@ -10,11 +10,15 @@
 	import "DPI-C" function void hit_good_trap();
 	import "DPI-C" function void hit_bad_trap();
 
+	
+	`define MSTATUS		12'h300
+	`define MTVEC		12'h305
+	`define MEPC 		12'h341
+	`define MCAUSE		12'h342
+
 
 	`define ysyx_23060229_U_AUIPC 	6'b000001
 	`define ysyx_23060229_U_LUI		6'b000010
-	
-
 
 	//type 1: write mem with reg
 	`define ysyx_23060229_S_SB		6'b000011
@@ -75,6 +79,7 @@
 	`define ysyx_23060229_I_SRLI 	6'b101010
 	`define ysyx_23060229_I_SRAI    6'b101011
 	
+	//CSR
 	`define ysyx_23060229_I_CSRRW	6'b101100
 	`define ysyx_23060229_I_CSRRWI	6'b101101
 	`define ysyx_23060229_I_CSRRS	6'b101110

@@ -11,6 +11,7 @@ module ysyx_23060229_IDU(
 	output reg[4:0] rd, //directly connected to reg::addr_in
 	output reg[31:0] imm,
 	output reg reg_wen, //directly connected to reg::wen
+	output reg[1:0] csreg_wen,
 	//output reg reg_wr,//to write reg
 	output reg mem_ren,
 	output reg mem_wen,
@@ -30,13 +31,13 @@ module ysyx_23060229_IDU(
             casez(inst)
 				//U-type
 				32'b???????_?????_?????_???_?????_0010111: begin
-					reg_wen = 1; mem_ren = 0; mem_wen = 0; mem_wmask = 0;
+					reg_wen = 1; csreg_wen = 0; mem_ren = 0; mem_wen = 0; mem_wmask = 0;
 					typ = `ysyx_23060229_U_AUIPC; imm = {inst[31:12],12'h0000};
 					rs1 = 0; rs2 = 0; rd = inst[11:7];
 				end
 
 				32'b???????_?????_?????_???_?????_0110111: begin
-                    reg_wen = 1; mem_ren = 0;  mem_wen = 0; mem_wmask = 0;
+                    reg_wen = 1; csreg_wen = 0; mem_ren = 0; mem_wen = 0; mem_wmask = 0;
                     typ = `ysyx_23060229_U_LUI; imm = {inst[31:12],12'h0000};
                     rs1 = 0; rs2 = 0; rd = inst[11:7];
                 end
@@ -44,56 +45,56 @@ module ysyx_23060229_IDU(
 				//S-type
 				//type 3: read reg + write mem
                 32'b???????_?????_?????_000_?????_0100011: begin
-                    reg_wen = 1; mem_ren = 0;  mem_wen = 1; mem_wmask = 8'b00000001;
+                    reg_wen = 1; csreg_wen = 0; mem_ren = 0; mem_wen = 1; mem_wmask = 8'b00000001;
                     typ = `ysyx_23060229_S_SB; imm = {{20{inst[31]}},inst[31:25],inst[11:7]};
                     rs1 = inst[19:15]; rs2 = inst[24:20]; rd = 0;
                 end
 
                 32'b???????_?????_?????_001_?????_0100011: begin
-                    reg_wen = 1; mem_ren = 0;  mem_wen = 1; mem_wmask = 8'b00000011;
+                    reg_wen = 1; csreg_wen = 0; mem_ren = 0; mem_wen = 1; mem_wmask = 8'b00000011;
                     typ = `ysyx_23060229_S_SH; imm = {{20{inst[31]}},inst[31:25],inst[11:7]};
                     rs1 = inst[19:15]; rs2 = inst[24:20]; rd = 0;
                 end
 
 				32'b???????_?????_?????_010_?????_0100011: begin
-                    reg_wen = 1; mem_ren = 0;  mem_wen = 1; mem_wmask = 8'b00001111;
+                    reg_wen = 1; csreg_wen = 0; mem_ren = 0; mem_wen = 1; mem_wmask = 8'b00001111;
                     typ = `ysyx_23060229_S_SW; imm = {{20{inst[31]}},inst[31:25],inst[11:7]};
                     rs1 = inst[19:15]; rs2 = inst[24:20]; rd = 0;
                 end
 
 				//B-type
 				32'b???????_?????_?????_000_?????_1100011: begin
-					reg_wen = 1; mem_ren = 0;  mem_wen = 0; mem_wmask = 0;
+					reg_wen = 1; csreg_wen = 0; mem_ren = 0; mem_wen = 0; mem_wmask = 0;
 					typ = `ysyx_23060229_B_BEQ; imm = {{19{inst[31]}},inst[31],inst[7],inst[30:25],inst[11:8],1'b0};
 					rs1 = inst[19:15]; rs2 = inst[24:20]; rd = 0;
 				end
 
 				32'b???????_?????_?????_001_?????_1100011: begin
-                    reg_wen = 1; mem_ren = 0;  mem_wen = 0; mem_wmask = 0;
+                    reg_wen = 1; csreg_wen = 0; mem_ren = 0; mem_wen = 0; mem_wmask = 0;
                     typ = `ysyx_23060229_B_BNE; imm = {{19{inst[31]}},inst[31],inst[7],inst[30:25],inst[11:8],1'b0};
                     rs1 = inst[19:15]; rs2 = inst[24:20]; rd = 0;
                 end
 
 				32'b???????_?????_?????_100_?????_1100011: begin
-                    reg_wen = 1; mem_ren = 0;  mem_wen = 0; mem_wmask = 0;
+                    reg_wen = 1; csreg_wen = 0; mem_ren = 0; mem_wen = 0; mem_wmask = 0;
                     typ = `ysyx_23060229_B_BLT; imm = {{19{inst[31]}},inst[31],inst[7],inst[30:25],inst[11:8],1'b0};
                     rs1 = inst[19:15]; rs2 = inst[24:20]; rd = 0;
                 end
 
 				32'b???????_?????_?????_110_?????_1100011: begin
-                    reg_wen = 1; mem_ren = 0;  mem_wen = 0; mem_wmask = 0;
+                    reg_wen = 1; csreg_wen = 0; mem_ren = 0; mem_wen = 0; mem_wmask = 0;
                     typ = `ysyx_23060229_B_BLTU; imm = {{19{inst[31]}},inst[31],inst[7],inst[30:25],inst[11:8],1'b0};
                     rs1 = inst[19:15]; rs2 = inst[24:20]; rd = 0;
                 end
 
 				32'b???????_?????_?????_101_?????_1100011: begin
-                    reg_wen = 1; mem_ren = 0;  mem_wen = 0; mem_wmask = 0;
+                    reg_wen = 1; csreg_wen = 0; mem_ren = 0; mem_wen = 0; mem_wmask = 0;
                     typ = `ysyx_23060229_B_BGE; imm = {{19{inst[31]}},inst[31],inst[7],inst[30:25],inst[11:8],1'b0};
                     rs1 = inst[19:15]; rs2 = inst[24:20]; rd = 0;
                 end
 
 				32'b???????_?????_?????_111_?????_1100011: begin
-                    reg_wen = 1; mem_ren = 0;  mem_wen = 0; mem_wmask = 0;
+                    reg_wen = 1; csreg_wen = 0; mem_ren = 0; mem_wen = 0; mem_wmask = 0;
                     typ = `ysyx_23060229_B_BGEU; imm = {{19{inst[31]}},inst[31],inst[7],inst[30:25],inst[11:8],1'b0};
                     rs1 = inst[19:15]; rs2 = inst[24:20]; rd = 0;
                 end
@@ -101,61 +102,61 @@ module ysyx_23060229_IDU(
 
 				//R-type
 				32'b0000000_?????_?????_000_?????_0110011: begin
-                    reg_wen = 1; mem_ren = 0;  mem_wen = 0; mem_wmask = 0;
+                    reg_wen = 1; csreg_wen = 0; mem_ren = 0; mem_wen = 0; mem_wmask = 0;
                     typ = `ysyx_23060229_R_ADD; imm = 0;
                     rs1 = inst[19:15]; rs2 = inst[24:20]; rd = inst[11:7];
                 end
 
 				32'b0100000_?????_?????_000_?????_0110011: begin
-                    reg_wen = 1; mem_ren = 0;  mem_wen = 0; mem_wmask = 0;
+                    reg_wen = 1; csreg_wen = 0; mem_ren = 0; mem_wen = 0; mem_wmask = 0;
                     typ = `ysyx_23060229_R_SUB; imm = 0;
                     rs1 = inst[19:15]; rs2 = inst[24:20]; rd = inst[11:7];
                 end
 
 				32'b0000000_?????_?????_100_?????_0110011: begin
-                    reg_wen = 1; mem_ren = 0;  mem_wen = 0; mem_wmask = 0;
+                    reg_wen = 1; csreg_wen = 0; mem_ren = 0; mem_wen = 0; mem_wmask = 0;
                     typ = `ysyx_23060229_R_XOR; imm = 0;
                     rs1 = inst[19:15]; rs2 = inst[24:20]; rd = inst[11:7];
                 end
 
 				32'b0000000_?????_?????_110_?????_0110011: begin
-                    reg_wen = 1; mem_ren = 0;  mem_wen = 0; mem_wmask = 0;
+                    reg_wen = 1; csreg_wen = 0; mem_ren = 0; mem_wen = 0; mem_wmask = 0;
                     typ = `ysyx_23060229_R_OR; imm = 0;
                     rs1 = inst[19:15]; rs2 = inst[24:20]; rd = inst[11:7];
                 end
 
 				32'b0000000_?????_?????_111_?????_0110011: begin
-                    reg_wen = 1; mem_ren = 0;  mem_wen = 0; mem_wmask = 0;
+                    reg_wen = 1; csreg_wen = 0; mem_ren = 0; mem_wen = 0; mem_wmask = 0;
                     typ = `ysyx_23060229_R_AND; imm = 0;
                     rs1 = inst[19:15]; rs2 = inst[24:20]; rd = inst[11:7];
                 end
 
 				32'b0000000_?????_?????_010_?????_0110011: begin
-                    reg_wen = 1; mem_ren = 0;  mem_wen = 0; mem_wmask = 0;
+                    reg_wen = 1; csreg_wen = 0; mem_ren = 0; mem_wen = 0; mem_wmask = 0;
                     typ = `ysyx_23060229_R_SLT; imm = 0;
                     rs1 = inst[19:15]; rs2 = inst[24:20]; rd = inst[11:7];
                 end
 
 				32'b0000000_?????_?????_011_?????_0110011: begin
-                    reg_wen = 1; mem_ren = 0;  mem_wen = 0; mem_wmask = 0;
+                    reg_wen = 1; csreg_wen = 0; mem_ren = 0; mem_wen = 0; mem_wmask = 0;
                     typ = `ysyx_23060229_R_SLTU; imm = 0;
                     rs1 = inst[19:15]; rs2 = inst[24:20]; rd = inst[11:7];
                 end
 				
 				32'b0000000_?????_?????_001_?????_0110011: begin
-                    reg_wen = 1; mem_ren = 0;  mem_wen = 0; mem_wmask = 0;
+                    reg_wen = 1; csreg_wen = 0; mem_ren = 0; mem_wen = 0; mem_wmask = 0;
                     typ = `ysyx_23060229_R_SLL; imm = 0;
                     rs1 = inst[19:15]; rs2 = inst[24:20]; rd = inst[11:7];
                 end
 
 				32'b0000000_?????_?????_101_?????_0110011: begin
-                    reg_wen = 1; mem_ren = 0;  mem_wen = 0; mem_wmask = 0;
+                    reg_wen = 1; csreg_wen = 0; mem_ren = 0; mem_wen = 0; mem_wmask = 0;
                     typ = `ysyx_23060229_R_SRL; imm = 0;
                     rs1 = inst[19:15]; rs2 = inst[24:20]; rd = inst[11:7];
                 end
 
 				32'b0100000_?????_?????_101_?????_0110011: begin
-                    reg_wen = 1; mem_ren = 0;  mem_wen = 0; mem_wmask = 0;
+                    reg_wen = 1; csreg_wen = 0; mem_ren = 0; mem_wen = 0; mem_wmask = 0;
                     typ = `ysyx_23060229_R_SRA; imm = 0;
                     rs1 = inst[19:15]; rs2 = inst[24:20]; rd = inst[11:7];
                 end
@@ -163,49 +164,49 @@ module ysyx_23060229_IDU(
 
 				//M-type
 				32'b0000001_?????_?????_000_?????_0110011: begin
-                    reg_wen = 1; mem_ren = 0;  mem_wen = 0; mem_wmask = 0;
+                    reg_wen = 1; csreg_wen = 0; mem_ren = 0; mem_wen = 0; mem_wmask = 0;
                     typ = `ysyx_23060229_M_MUL; imm = 0;
                     rs1 = inst[19:15]; rs2 = inst[24:20]; rd = inst[11:7];
                 end
 
 				32'b0000001_?????_?????_001_?????_0110011: begin
-                    reg_wen = 1; mem_ren = 0;  mem_wen = 0; mem_wmask = 0;
+                    reg_wen = 1; csreg_wen = 0; mem_ren = 0; mem_wen = 0; mem_wmask = 0;
                     typ = `ysyx_23060229_M_MULH; imm = 0;
                     rs1 = inst[19:15]; rs2 = inst[24:20]; rd = inst[11:7];
                 end
 
 				32'b0000001_?????_?????_010_?????_0110011: begin
-                    reg_wen = 1; mem_ren = 0;  mem_wen = 0; mem_wmask = 0;
+                    reg_wen = 1; csreg_wen = 0; mem_ren = 0; mem_wen = 0; mem_wmask = 0;
                     typ = `ysyx_23060229_M_MULHSU; imm = 0;
                     rs1 = inst[19:15]; rs2 = inst[24:20]; rd = inst[11:7];
                 end
 
 				32'b0000001_?????_?????_011_?????_0110011: begin
-                    reg_wen = 1; mem_ren = 0;  mem_wen = 0; mem_wmask = 0;
+                    reg_wen = 1; csreg_wen = 0; mem_ren = 0; mem_wen = 0; mem_wmask = 0;
                     typ = `ysyx_23060229_M_MULHU; imm = 0;
                     rs1 = inst[19:15]; rs2 = inst[24:20]; rd = inst[11:7];
                 end
 
 				32'b0000001_?????_?????_100_?????_0110011: begin
-                    reg_wen = 1; mem_ren = 0;  mem_wen = 0; mem_wmask = 0;
+                    reg_wen = 1; csreg_wen = 0; mem_ren = 0; mem_wen = 0; mem_wmask = 0;
                     typ = `ysyx_23060229_M_DIV; imm = 0;
                     rs1 = inst[19:15]; rs2 = inst[24:20]; rd = inst[11:7];
                 end
 
 				32'b0000001_?????_?????_101_?????_0110011: begin
-                    reg_wen = 1; mem_ren = 0;  mem_wen = 0; mem_wmask = 0;
+                    reg_wen = 1; csreg_wen = 0; mem_ren = 0; mem_wen = 0; mem_wmask = 0;
                     typ = `ysyx_23060229_M_DIVU; imm = 0;
                     rs1 = inst[19:15]; rs2 = inst[24:20]; rd = inst[11:7];
                 end
 
 				32'b0000001_?????_?????_110_?????_0110011: begin
-                    reg_wen = 1; mem_ren = 0;  mem_wen = 0; mem_wmask = 0;
+                    reg_wen = 1; csreg_wen = 0; mem_ren = 0; mem_wen = 0; mem_wmask = 0;
                     typ = `ysyx_23060229_M_REM; imm = 0;
                     rs1 = inst[19:15]; rs2 = inst[24:20]; rd = inst[11:7];
                 end
 
 				32'b0000001_?????_?????_111_?????_0110011: begin
-                    reg_wen = 1; mem_ren = 0;  mem_wen = 0; mem_wmask = 0;
+                    reg_wen = 1; csreg_wen = 0; mem_ren = 0; mem_wen = 0; mem_wmask = 0;
                     typ = `ysyx_23060229_M_REMU; imm = 0;
                     rs1 = inst[19:15]; rs2 = inst[24:20]; rd = inst[11:7];
                 end
@@ -214,31 +215,31 @@ module ysyx_23060229_IDU(
 				//I-type
 				//type 2: read mem + write reg
                 32'b???????_?????_?????_000_?????_0000011: begin
-                    reg_wen = 1; mem_ren = 1;  mem_wen = 0; mem_wmask = 0;
+                    reg_wen = 1; csreg_wen = 0; mem_ren = 1; mem_wen = 0; mem_wmask = 0;
                     typ = `ysyx_23060229_I_LB; imm = {{20{inst[31]}},inst[31:20]};
                     rs1 = inst[19:15]; rs2 = 0; rd = inst[11:7];
                 end
 
 				32'b???????_?????_?????_001_?????_0000011: begin
-                    reg_wen = 1; mem_ren = 1;  mem_wen = 0; mem_wmask = 0;
+                    reg_wen = 1; csreg_wen = 0; mem_ren = 1; mem_wen = 0; mem_wmask = 0;
                     typ = `ysyx_23060229_I_LH; imm = {{20{inst[31]}},inst[31:20]};
                     rs1 = inst[19:15]; rs2 = 0; rd = inst[11:7];
                 end
 
 				32'b???????_?????_?????_010_?????_0000011: begin
-                    reg_wen = 1; mem_ren = 1;  mem_wen = 0; mem_wmask = 0;
+                    reg_wen = 1; csreg_wen = 0; mem_ren = 1; mem_wen = 0; mem_wmask = 0;
                     typ = `ysyx_23060229_I_LW; imm = {{20{inst[31]}},inst[31:20]};
                     rs1 = inst[19:15]; rs2 = 0; rd = inst[11:7];
                 end
 				
 				32'b???????_?????_?????_100_?????_0000011: begin
-                    reg_wen = 1; mem_ren = 1;  mem_wen = 0; mem_wmask = 0;
+                    reg_wen = 1; csreg_wen = 0; mem_ren = 1; mem_wen = 0; mem_wmask = 0;
                     typ = `ysyx_23060229_I_LBU; imm = {{20{inst[31]}},inst[31:20]};
                     rs1 = inst[19:15]; rs2 = 0; rd = inst[11:7];
                 end
 
 				32'b???????_?????_?????_101_?????_0000011: begin
-                    reg_wen = 1; mem_ren = 1; mem_wen = 0; mem_wmask = 0;
+                    reg_wen = 1; csreg_wen = 0; mem_ren = 1; mem_wen = 0; mem_wmask = 0;
                     typ = `ysyx_23060229_I_LHU; imm = {{20{inst[31]}},inst[31:20]};
                     rs1 = inst[19:15]; rs2 = 0; rd = inst[11:7];
                 end
@@ -246,62 +247,102 @@ module ysyx_23060229_IDU(
 
 				//type 1: read reg + write reg
                 32'b???????_?????_?????_000_?????_0010011: begin
-					reg_wen = 1; mem_ren = 0;  mem_wen = 0; mem_wmask = 0;
+					reg_wen = 1; csreg_wen = 0; mem_ren = 0; mem_wen = 0; mem_wmask = 0;
                     typ = `ysyx_23060229_I_ADDI; imm = {{20{inst[31]}},inst[31:20]};
                     rs1 = inst[19:15]; rs2 = 0; rd = inst[11:7];
                 end
 
 				32'b???????_?????_?????_111_?????_0010011: begin
-                    reg_wen = 1; mem_ren = 0;  mem_wen = 0; mem_wmask = 0;
+                    reg_wen = 1; csreg_wen = 0; mem_ren = 0; mem_wen = 0; mem_wmask = 0;
                     typ = `ysyx_23060229_I_ANDI; imm = {{20{inst[31]}},inst[31:20]};
                     rs1 = inst[19:15]; rs2 = 0; rd = inst[11:7];
                 end
 
 				32'b???????_?????_?????_110_?????_0010011: begin
-                    reg_wen = 1; mem_ren = 0;  mem_wen = 0; mem_wmask = 0;
+                    reg_wen = 1; csreg_wen = 0; mem_ren = 0; mem_wen = 0; mem_wmask = 0;
                     typ = `ysyx_23060229_I_ORI; imm = {{20{inst[31]}},inst[31:20]};
                     rs1 = inst[19:15]; rs2 = 0; rd = inst[11:7];
                 end
 
 				32'b???????_?????_?????_100_?????_0010011: begin
-                    reg_wen = 1; mem_ren = 0;  mem_wen = 0; mem_wmask = 0;
+                    reg_wen = 1; csreg_wen = 0; mem_ren = 0; mem_wen = 0; mem_wmask = 0;
                     typ = `ysyx_23060229_I_XORI; imm = {{20{inst[31]}},inst[31:20]};
                     rs1 = inst[19:15]; rs2 = 0; rd = inst[11:7];
                 end
 
 				32'b???????_?????_?????_010_?????_0010011: begin
-                    reg_wen = 1; mem_ren = 0;  mem_wen = 0; mem_wmask = 0;
+                    reg_wen = 1; csreg_wen = 0; mem_ren = 0; mem_wen = 0; mem_wmask = 0;
                     typ = `ysyx_23060229_I_SLTI; imm = {{20{inst[31]}},inst[31:20]};
                     rs1 = inst[19:15]; rs2 = 0; rd = inst[11:7];
                 end
 
 				32'b???????_?????_?????_011_?????_0010011: begin
-                    reg_wen = 1; mem_ren = 0;  mem_wen = 0; mem_wmask = 0;
+                    reg_wen = 1; csreg_wen = 0; mem_ren = 0; mem_wen = 0; mem_wmask = 0;
                     typ = `ysyx_23060229_I_SLTIU; imm = {{20{inst[31]}},inst[31:20]};
                     rs1 = inst[19:15]; rs2 = 0; rd = inst[11:7];
                 end
 
 				//special
 				32'b0000000_?????_?????_001_?????_0010011: begin
-                    reg_wen = 1; mem_ren = 0;  mem_wen = 0; mem_wmask = 0;
+                    reg_wen = 1; csreg_wen = 0; mem_ren = 0; mem_wen = 0; mem_wmask = 0;
                     typ = `ysyx_23060229_I_SLLI; imm = {27'b0, inst[24:20]};
                     rs1 = inst[19:15]; rs2 = inst[24:20]; rd = inst[11:7];
                 end
 
 				32'b0000000_?????_?????_101_?????_0010011: begin
-                    reg_wen = 1; mem_ren = 0;  mem_wen = 0; mem_wmask = 0;
+                    reg_wen = 1; csreg_wen = 0; mem_ren = 0; mem_wen = 0; mem_wmask = 0;
                     typ = `ysyx_23060229_I_SRLI; imm = {27'b0, inst[24:20]};
                     rs1 = inst[19:15]; rs2 = inst[24:20]; rd = inst[11:7];
                 end
 
 				32'b0100000_?????_?????_101_?????_0010011: begin
-                    reg_wen = 1; mem_ren = 0;  mem_wen = 0; mem_wmask = 0;
+                    reg_wen = 1; csreg_wen = 0; mem_ren = 0; mem_wen = 0; mem_wmask = 0;
                     typ = `ysyx_23060229_I_SRAI; imm = {27'b0, inst[24:20]};
                     rs1 = inst[19:15]; rs2 = inst[24:20]; rd = inst[11:7];
                 end
 
+
+				//CSR: read Register + read System Register + write Register + write System Register
+				32'b???????_?????_?????_001_?????_1110011: begin
+                    reg_wen = 1; csreg_wen = 2'b01; mem_ren = 0; mem_wen = 0; mem_wmask = 0;
+                    typ = `ysyx_23060229_I_CSRRW; imm = inst;
+                    rs1 = inst[19:15]; rs2 = 0; rd = inst[11:7];
+                end
+
+				32'b???????_?????_?????_010_?????_1110011: begin
+                    reg_wen = 1; csreg_wen = 2'b01; mem_ren = 0; mem_wen = 0; mem_wmask = 0;
+                    typ = `ysyx_23060229_I_CSRRWI; imm = inst;
+                    rs1 = inst[19:15]; rs2 = 0; rd = inst[11:7];
+                end
+
+				32'b???????_?????_?????_011_?????_1110011: begin
+                    reg_wen = 1; csreg_wen = 2'b01; mem_ren = 0; mem_wen = 0; mem_wmask = 0;
+                    typ = `ysyx_23060229_I_CSRRS; imm = inst;
+                    rs1 = inst[19:15]; rs2 = 0; rd = inst[11:7];
+                end
+
+				32'b???????_?????_?????_101_?????_1110011: begin
+                    reg_wen = 1; csreg_wen = 2'b01; mem_ren = 0; mem_wen = 0; mem_wmask = 0;
+                    typ = `ysyx_23060229_I_CSRRSI; imm = inst;
+                    rs1 = inst[19:15]; rs2 = 0; rd = inst[11:7];
+                end
+
+				32'b???????_?????_?????_110_?????_1110011: begin
+                    reg_wen = 1; csreg_wen = 2'b01; mem_ren = 0; mem_wen = 0; mem_wmask = 0;
+                    typ = `ysyx_23060229_I_CSRRC; imm = inst;
+                    rs1 = inst[19:15]; rs2 = 0; rd = inst[11:7];
+                end
+
+				32'b???????_?????_?????_111_?????_1110011: begin
+                    reg_wen = 1; csreg_wen = 2'b01; mem_ren = 0; mem_wen = 0; mem_wmask = 0;
+                    typ = `ysyx_23060229_I_CSRRCI; imm = inst;
+                    rs1 = inst[19:15]; rs2 = 0; rd = inst[11:7];
+                end
+
+
+				//JALR
 				32'b???????_?????_?????_000_?????_1100111: begin
-                    reg_wen = 1; mem_ren = 0;  mem_wen = 0; mem_wmask = 0;
+                    reg_wen = 1; csreg_wen = 0; mem_ren = 0; mem_wen = 0; mem_wmask = 0;
                     typ = `ysyx_23060229_I_JALR; imm = {{20{inst[31]}},inst[31:20]};
                     rs1 = inst[19:15]; rs2 = 0; rd = inst[11:7];
                 end
@@ -309,7 +350,7 @@ module ysyx_23060229_IDU(
 			
 				//J-type
 				32'b???????_?????_?????_???_?????_1101111: begin
-                    reg_wen = 1; mem_ren = 0;  mem_wen = 0; mem_wmask = 0;
+                    reg_wen = 1; csreg_wen = 0; mem_ren = 0; mem_wen = 0; mem_wmask = 0;
                     typ = `ysyx_23060229_J_JAL; imm = {{11{inst[31]}},inst[31],inst[19:12],inst[20],inst[30:21],1'b0};
                     rs1 = 0; rs2 = 0; rd = inst[11:7];
                 end
@@ -317,14 +358,26 @@ module ysyx_23060229_IDU(
 
 
 				//type 4: others
-                32'b0000000_00001_00000_000_00000_1110011: begin//break
-					reg_wen = 1; mem_ren = 0;  mem_wen = 0; mem_wmask = 0;
+                32'b0000000_00001_00000_000_00000_1110011: begin//ebreak
+					reg_wen = 1; csreg_wen = 0; mem_ren = 0; mem_wen = 0; mem_wmask = 0;
                     typ = `ysyx_23060229_EBREAK; imm = 0; rs1 = 0; rs2 = 0; rd = 0;
                 end
 
+				//注意此处csreg_wen取值特殊
+				32'b0000000_00000_00000_000_00000_1110011: begin//ecall
+                    reg_wen = 1; csreg_wen = 2'b10; mem_ren = 0; mem_wen = 0; mem_wmask = 0;
+                    typ = `ysyx_23060229_ECALL; imm = {`MTVEC, 20'b0}; rs1 = 0; rs2 = 0; rd = 0;
+                end
+
+				32'b0011000_00010_00000_000_00000_1110011: begin//mret
+                    reg_wen = 1; csreg_wen = 0; mem_ren = 0; mem_wen = 0; mem_wmask = 0;
+                    typ = `ysyx_23060229_MRET; imm = {`MEPC, 20'b0}; rs1 = 0; rs2 = 0; rd = 0;
+                end
+
+
 				//None
                 default: begin
-					reg_wen = 1; mem_ren = 0;  mem_wen = 0; mem_wmask = 0;
+					reg_wen = 1; csreg_wen = 0; mem_ren = 0; mem_wen = 0; mem_wmask = 0;
                     typ = `ysyx_23060229_NONE; imm = 0; rs1 = 0; rs2 = 0; rd = 0;
 				end
 
