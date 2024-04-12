@@ -40,7 +40,7 @@ bool cte_init(Context*(*handler)(Event, Context*)) {
 Context *kcontext(Area kstack, void (*entry)(void *), void *arg) {
 	//在栈底部创建一个上下文结构
     //暂时不考虑Context中的void *pdir成员变量
-    Context* Cptr = (Context*)( kstack.end - sizeof(Context) + 4 );
+    Context* Cptr = (Context*)( kstack.end - sizeof(Context) );
     Cptr -> mepc = (uintptr_t)entry;
     Cptr -> gpr[10] = (uintptr_t)arg;
     //Cptr -> gpr[11] = (uintptr_t)(arg + 1);
