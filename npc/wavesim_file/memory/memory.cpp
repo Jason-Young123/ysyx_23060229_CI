@@ -140,9 +140,9 @@ extern "C" void pmem_write_(uint32_t waddr, int wdata, char wmask){
 
 void init_devices(){
 #ifdef CONFIG_SERIAL
-	printf("\033[36mSerial is ON\033[0m\n");
+	printf("\033[36mSerial is \033[32mON\033[0m\n");
 #else
-	printf("\033[36mSerial is OFF\033[0m\n");
+	printf("\033[36mSerial is \033[31mOFF\033[0m\n");
 #endif
 
 #ifdef CONFIG_TIMER
