@@ -146,23 +146,23 @@ void init_devices(){
 #endif
 
 #ifdef CONFIG_TIMER
-    printf("\033[36mTimer is ON\033[0m\n");
+    printf("\033[36mTimer is \033[32mON\033[0m\n");
 #else
-    printf("\033[36mTimer is OFF\033[0m\n");
+    printf("\033[36mTimer is \033[31mOFF\033[0m\n");
 #endif
 
 #ifdef CONFIG_KEYBOARD
 	init_keymap();
-    printf("\033[36mKeyboard is ON\033[0m\n");
+    printf("\033[36mKeyboard is \033[32mON\033[0m\n");
 #else
-    printf("\033[36mKeyboard is OFF\033[0m\n");
+    printf("\033[36mKeyboard is \033[31mOFF\033[0m\n");
 #endif
 
 #ifdef CONFIG_GPU
 	init_vga();
-	printf("\033[36mGPU is ON\033[0m\n");
+	printf("\033[36mGPU is \033[32mON\033[0m\n");
 #else
-	printf("\033[36mGPU is OFF\033[0m\n");
+	printf("\033[36mGPU is \033[31mOFF\033[0m\n");
 #endif
 
 }

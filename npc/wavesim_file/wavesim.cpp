@@ -37,27 +37,27 @@ int main(int argc, char *argv[]){
 
 	printf("Checking Options:\n");
 #ifdef CONFIG_WAVEREC
-	printf("\033[36mWave Record is ON\033[0m\n");
+	printf("\033[36mWave Record is \033[32mON\033[0m\n");
     // to enable wave tracing
     Verilated::traceEverOn(true);
     //VerilatedVcdC* m_trace = new VerilatedVcdC;
     top -> trace(m_trace, 5);
     m_trace -> open("./wavesim_file/wave.vcd");
 #else
-	printf("\033[36mWave Record is OFF\033[0m\n");
+	printf("\033[36mWave Record is \033[31mOFF\033[0m\n");
 #endif
 
 #ifdef CONFIG_WP
-	printf("\033[36mWatchpoint is ON\033[0m\n");
+	printf("\033[36mWatchpoint is \033[32mON\033[0m\n");
 #else
-	printf("\033[36mWatchpoint is OFF\033[0m\n");
+	printf("\033[36mWatchpoint is \033[31mOFF\033[0m\n");
 #endif
 
 #ifdef CONFIG_DIFFTEST
-	printf("\033[36mDifftest is ON\033[0m\n");
+	printf("\033[36mDifftest is \033[32mON\033[0m\n");
 	printf("\033[36mPath of reference file:\n%s\033[0m\n",ref_so_file);
 #else
-	printf("\033[36mDifftest is OFF\033[0m\n");
+	printf("\033[36mDifftest is \033[31mOFF\033[0m\n");
 #endif
 
 
