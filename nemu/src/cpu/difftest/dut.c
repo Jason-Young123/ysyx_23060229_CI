@@ -63,7 +63,7 @@ void init_difftest(char *ref_so_file, long img_size, int port) {
   assert(ref_so_file != NULL);
 
   extern uint32_t sregs[4096];//defined in src/isa/riscv32/reg.c
-  sregs[0x300] = 0xa0001800;
+  sregs[0x300] = 0x00001800;
 
   void *handle;
   handle = dlopen(ref_so_file, RTLD_LAZY);
