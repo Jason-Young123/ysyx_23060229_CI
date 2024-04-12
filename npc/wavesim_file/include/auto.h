@@ -4,4 +4,3 @@
 #define CONFIG_KEYBOARD 1
 #define CONFIG_GPU 1
 #define CONFIG_WP 1
-#define CONFIG_DIFFTEST 1
