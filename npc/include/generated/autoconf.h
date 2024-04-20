@@ -5,6 +5,7 @@
  *
  */
 #define CONFIG_DEVICES 1
+#define CONFIG_WAVEREC 1
 #define CONFIG_TIMER 1
 #define CONFIG_KEYBOARD 1
 #define CONFIG_SERIAL 1
