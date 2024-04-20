@@ -2,17 +2,17 @@
 
 TOP_MODULE = ysyx_23060229_top
 
-CONSTR = $(NPC_HOME)/constr
-VFILE = $(NPC_HOME)/vfile
-BOARDSIM_FILE = $(NPC_HOME)/boardsim_file
-WAVESIM_FILE = $(NPC_HOME)/wavesim_file
+CONSTR = $(NPC_V1_HOME)/constr
+VFILE = $(NPC_V1_HOME)/vfile
+BOARDSIM_FILE = $(NPC_V1_HOME)/boardsim_file
+WAVESIM_FILE = $(NPC_V1_HOME)/wavesim_file
 
 VERILATOR_CFLAGS += -MMD --build -cc -O3 --x-assign fast \
 					--x-initial fast --noassert
 
 
 
-CFLAGS += -I$(NPC_HOME)/wavesim_file
+CFLAGS += -I$(NPC_V1_HOME)/wavesim_file
 LIBS += /lib/x86_64-linux-gnu/libreadline.so\
 	   /lib/x86_64-linux-gnu/libSDL2.so
 
@@ -31,7 +31,7 @@ ISWAVE = 0
 
 include $(NVBOARD_HOME)/scripts/nvboard.mk
 include ~/Desktop/ysyx-workbench/Makefile
-include $(NPC_HOME)/config/config.mk
+include $(NPC_V1_HOME)/config/config.mk
 
 #TIMING = --timing
 
