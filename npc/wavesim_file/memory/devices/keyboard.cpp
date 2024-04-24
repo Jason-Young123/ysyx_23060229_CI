@@ -72,10 +72,10 @@ void init_keymap() {
     return 0;
 }*/
 
-int cnt;
+//int cnt;
 
 int fetch_keyboard_addr(uint32_t raddr){
-	printf("cnt in hw: %d\n", cnt++);
+	//printf("cnt in hw: %d\n", cnt++);
 	difftest_to_skip = true;
 	int ret = 0;
 	SDL_Event event;
