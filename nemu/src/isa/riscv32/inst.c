@@ -163,7 +163,8 @@ static int decode_exec(Decode *s) {
   INSTPAT("0000000 00001 00000 000 00000 11100 11", ebreak , N, NEMUTRAP(s->pc, R(10))); // R(10) is $a0
   
   //ecall
-  INSTPAT("0000000 00000 00000 000 00000 11100 11", ecall  , N, SR(MEPC) = isa_raise_intr(0xb,s->pc);s->dnpc = SR(MTVEC)); 
+  //INSTPAT("0000000 00000 00000 000 00000 11100 11", ecall  , N, SR(MEPC) = isa_raise_intr(0xb,s->pc);s->dnpc = SR(MTVEC)); 
+  INSTPAT("0000000 00000 00000 000 00000 11100 11", ecall  , N, s->dnpc = isa_raise_intr(0xb, s->pc)); 
   // mtvec定义于local-include/reg.h
 
   //mret
