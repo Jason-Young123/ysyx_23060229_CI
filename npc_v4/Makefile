@@ -5,6 +5,13 @@ VERSION = V4
 
 CONSTR = $(NPC_$(VERSION)_HOME)/constr
 VFILE = $(NPC_$(VERSION)_HOME)/vfile
+VSRC = $(SOC_HOME)/perip
+
+SEARCH_PATH = $(SOC_HOME)/perip/uart16550/rtl \
+			  $(SOC_HOME)/perip/spi/rtl \
+			  $(VFILE)
+INCLUDES = $(foreach dir, $(SEARCH_PATH), -I$(dir))
+
 BOARDSIM_FILE = $(NPC_$(VERSION)_HOME)/boardsim_file
 WAVESIM_FILE = $(NPC_$(VERSION)_HOME)/wavesim_file
 
@@ -34,12 +41,16 @@ include $(NVBOARD_HOME)/scripts/nvboard.mk
 include ~/Desktop/ysyx-workbench/Makefile
 include $(NPC_$(VERSION)_HOME)/config/config.mk
 
-#TIMING = --timing
+TIMING = --timescale "1ns/1ns" --no-timing
 
 
 # to convert .v/.sv files into .c files
 convert:
-	verilator -cc $(VFILE)/$(TOP_MODULE).v -I$(VFILE) $(TIMING)
+	@verilator -cc $(VFILE)/$(TOP_MODULE).v \
+	$(INCLUDES) \
+	$(TIMING)
+#$(shell find $(VFILE) -name "*.v") $(shell find $(VSRC) -name "*.v") \
+#$(TIMING)
 
 
 constrgen:
