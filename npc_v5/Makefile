@@ -1,17 +1,22 @@
 .PHONY: wavesim
 
-TOP_MODULE = ysyx_23060229_top
-TOP_MODULE_FILE = $(NPC_$(VERSION)_HOME)/vfile/ysyx_23060229_top.v
-
+#TOP_MODULE = ysyx_23060229_top
 VERSION = V4
 
 CONSTR = $(NPC_$(VERSION)_HOME)/constr
 
-VFILE += $(shell find $(NPC_$(VERSION)_HOME)/vfile -type f -name "*.v")
+
+TOP_MODULE = ysyxSoCFull
+TOP_MODULE_FILE = $(SOC_HOME)/build/ysyxSoCFull.v
+
+VFILE += $(shell find $(SOC_HOME)/perip -type f -name "*.v") \
+		$(shell find $(NPC_$(VERSION)_HOME)/vfile -type f -name "*.v")
 #VFILE = $(NPC_$(VERSION)_HOME)/vfile
 #VSRC = $(SOC_HOME)/perip
 
-SEARCH_PATH = $(NPC_$(VERSION)_HOME)/vfile
+SEARCH_PATH = $(SOC_HOME)/perip/uart16550/rtl \
+			  $(SOC_HOME)/perip/spi/rtl \
+			  $(NPC_$(VERSION)_HOME)/vfile
 INCLUDES = $(foreach dir, $(SEARCH_PATH), -I$(dir))
 
 BOARDSIM_FILE = $(NPC_$(VERSION)_HOME)/boardsim_file
@@ -48,10 +53,13 @@ TIMING = --timescale "1ns/1ns" --no-timing
 
 # to convert .v/.sv files into .c files
 convert:
-	@verilator --top-module $(TOP_MODULE)  \
+	verilator --top-module $(TOP_MODULE)  \
 	-cc $(TOP_MODULE_FILE) \
 	$(VFILE) \
 	$(INCLUDES) \
+	$(TIMING) 
+#$(shell find $(VFILE) -name "*.v") $(shell find $(VSRC) -name "*.v") \
+#$(TIMING)
 
 
 constrgen:
