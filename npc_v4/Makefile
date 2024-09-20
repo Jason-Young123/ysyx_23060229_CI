@@ -48,7 +48,7 @@ TIMING = --timescale "1ns/1ns" --no-timing
 
 # to convert .v/.sv files into .c files
 convert:
-	@verilator --top-module $(TOP_MODULE)  \
+	@verilator --autoflush --top-module $(TOP_MODULE)  \
 	-cc $(TOP_MODULE_FILE) \
 	$(VFILE) \
 	$(INCLUDES) \
@@ -78,7 +78,7 @@ boardclean:
 
 wavesim:
 	$(call git_commit, "wavesim in npc")
-	@verilator -Wall --trace --top-module $(TOP_MODULE)\
+	@verilator -Wall --trace --autoflush --top-module $(TOP_MODULE)\
 		-cc $(TOP_MODULE_FILE) $(VFILE) $(INCLUDES)\
 		--exe $(SRCS) -CFLAGS $(CFLAGS)	-D $(LIBS)  
 	@make -C obj_dir -f V$(TOP_MODULE).mk V$(TOP_MODULE)
