@@ -183,10 +183,10 @@ exec_foo:
 
 
 clean:
-	@rm $(NPC_HOME_23060229)/obj_dir/*
-	@rm $(NPC_HOME_23060229)/build/*
-	@rm $(NPC_HOME_23060229)/VysyxSoCFull
-	@rm $(NPC_HOME_23060229)/ysyxNonSoCFull
+	@rm -f $(NPC_HOME_23060229)/obj_dir/*
+	@rm -f $(NPC_HOME_23060229)/build/*
+	@rm -f $(NPC_HOME_23060229)/VysyxSoCFull
+	@rm -f $(NPC_HOME_23060229)/ysyxNonSoCFull
 
 
 
