@@ -45,6 +45,7 @@ run: image
 
 
 run: insert-arg
-	echo "TODO: add command here to run simulation"
+	@echo "***** Execute target:run in $(CURPATH) *****"
+	@$(MAKE) -C $(NPC_HOME) sim-iverilog IMG=$(IMAGE)
 
 .PHONY: insert-arg
