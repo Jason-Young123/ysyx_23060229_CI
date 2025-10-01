@@ -1,8 +1,8 @@
-include $(NVBOARD_HOME)/scripts/nvboard.mk
-include ~/Desktop/ysyx-workbench/Makefile
+include $(YSYX_HOME)/Makefile
 include $(NPC_HOME)/config/config.mk
 
-WDIR_23060229 = $(shell pwd)/..
+#WDIR_23060229 = $(shell pwd)/..
+WDIR_23060229 = $(YSYX_HOME)
 SOC_HOME_23060229 = $(WDIR_23060229)/ysyxSoC
 NPC_HOME_23060229 = $(WDIR_23060229)/npc
 SIM_HOME_23060229 = $(NPC_HOME_23060229)/wavesim_file
